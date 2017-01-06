@@ -1,4 +1,4 @@
-package com.hadooppractice;
+package com.hadooppractice.wordcount;
 
 import java.io.IOException;
 
@@ -9,9 +9,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-import com.hadooppractice.wordcount.TextCountMapper;
-import com.hadooppractice.wordcount.TextCountReducer;
 
 public class App {
 
