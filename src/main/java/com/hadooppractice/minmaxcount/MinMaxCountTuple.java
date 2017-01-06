@@ -11,11 +11,9 @@ import org.apache.hadoop.io.Writable;
 
 public class MinMaxCountTuple implements Writable {
 	
-//	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS");
-	
-	private LocalDateTime min;
-	private LocalDateTime max;
-	private Long count;
+	private LocalDateTime min = LocalDateTime.MAX;
+	private LocalDateTime max = LocalDateTime.MIN;
+	private Long count = 0L;
 
 	@Override
 	public void readFields(DataInput input) throws IOException {
@@ -53,6 +51,11 @@ public class MinMaxCountTuple implements Writable {
 
 	public void setCount(Long count) {
 		this.count = count;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s %s %s", min, max, count);
 	}
 
 }
