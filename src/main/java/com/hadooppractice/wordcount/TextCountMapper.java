@@ -7,11 +7,11 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class TextCountMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+public class TextCountMapper extends Mapper<Object, Text, Text, LongWritable> {
 	private final static LongWritable one = new LongWritable(1);
 	private Text word = new Text();
 
-	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 		String line = value.toString();
 		StringTokenizer tokenizer = new StringTokenizer(line);
 		while (tokenizer.hasMoreTokens()) {
