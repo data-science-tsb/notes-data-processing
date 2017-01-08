@@ -1,23 +1,22 @@
 package com.hadooppractice.wordcount;
 
+import static org.mockito.Mockito.*;
+
 import com.hadooppractice.testutils.MockitoExtension;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 
 import java.io.IOException;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TextCountMapperTest {
 	
 	@Test
-	void mapShouldRunSuccessfuly() throws IOException, InterruptedException {
-
-        Mapper<Object, Text, Text, LongWritable>.Context mockContext = mock(Mapper.Context.class);
+	void mapShouldRunSuccessfully(@Mock Mapper<Object, Text, Text, LongWritable>.Context mockContext) throws IOException, InterruptedException {
 		TextCountMapper mapper = new TextCountMapper();
 		
 		Text value = new Text("test1 test2 test3 test3");

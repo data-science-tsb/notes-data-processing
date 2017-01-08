@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Map;
 
+import com.hadooppractice.testutils.SampleData;
 import org.junit.jupiter.api.Test;
 
 import com.hadooppractice.utils.XMLParser;
