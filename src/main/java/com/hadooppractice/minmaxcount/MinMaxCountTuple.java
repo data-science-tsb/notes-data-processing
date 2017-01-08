@@ -14,7 +14,15 @@ public class MinMaxCountTuple implements Writable {
 	private LocalDateTime max = LocalDateTime.MIN;
 	private Long count = 0L;
 
-	@Override
+    public MinMaxCountTuple(LocalDateTime min, LocalDateTime max, Long count) {
+        this.min = min;
+        this.max = max;
+        this.count = count;
+    }
+
+    public MinMaxCountTuple() {}
+
+    @Override
 	public void readFields(DataInput input) throws IOException {
 		min = DateConverter.stringToDate(input.readUTF());
 		max = DateConverter.stringToDate(input.readUTF());
