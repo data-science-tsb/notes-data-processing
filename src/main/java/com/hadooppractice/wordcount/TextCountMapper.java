@@ -8,15 +8,13 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class TextCountMapper extends Mapper<Object, Text, Text, LongWritable> {
-	private final static LongWritable one = new LongWritable(1);
-	private Text word = new Text();
+	private final static LongWritable ONE = new LongWritable(1);
 
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-		String line = value.toString();
-		StringTokenizer tokenizer = new StringTokenizer(line);
+		StringTokenizer tokenizer = new StringTokenizer(value.toString());
+
 		while (tokenizer.hasMoreTokens()) {
-			word.set(tokenizer.nextToken());
-			context.write(word, one);
+			context.write(new Text(tokenizer.nextToken()), ONE);
 		}
 	}
 }
