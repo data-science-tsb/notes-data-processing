@@ -12,9 +12,9 @@ public class XMLParserTest {
 
 	@Test
     void myFirstTest() {
-        String sampleXml = "  <row Id=\"1\" TagName=\".net\" Count=\"244006\" ExcerptPostId=\"3624959\" WikiPostId=\"3607476\" />";
-        Map<String, String> parsed = XMLParser.toMap(sampleXml);
+        Map<String, String> parsed = XMLParser.toMap(SampleData.COMMENT_ROW);
         
-        assertEquals("1", parsed.get("Id"));
+        assertEquals("2579740", parsed.get("Id"));
+        assertEquals("2573882", parsed.get("PostId"));
     }
 }
