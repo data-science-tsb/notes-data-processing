@@ -11,17 +11,7 @@ public class MinMaxCountReducer extends Reducer<Text, MinMaxCountTuple, Text, Mi
 	protected void reduce(Text text, Iterable<MinMaxCountTuple> values, Reducer<Text, MinMaxCountTuple, Text, MinMaxCountTuple>.Context context) throws IOException, InterruptedException {
 		MinMaxCountTuple out = new MinMaxCountTuple();
 		
-//		values.forEach(v -> {
-//			if (v.getMax().isAfter(out.getMax())) {
-//				out.setMax(v.getMax());
-//			}
-//			if (v.getMin().isBefore(out.getMin())) {
-//				out.setMin(v.getMin());
-//			}
-//			out.setCount(out.getCount() + v.getCount());
-//		});
-		
-		for (MinMaxCountTuple v : values) {
+		values.forEach(v -> {
 			if (v.getMax().isAfter(out.getMax())) {
 				out.setMax(v.getMax());
 			}
@@ -29,7 +19,7 @@ public class MinMaxCountReducer extends Reducer<Text, MinMaxCountTuple, Text, Mi
 				out.setMin(v.getMin());
 			}
 			out.setCount(out.getCount() + v.getCount());
-		}
+		});
 		
 		context.write(text, out);
 	}
