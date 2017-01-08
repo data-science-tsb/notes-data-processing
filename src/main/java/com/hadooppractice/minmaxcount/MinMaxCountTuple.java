@@ -1,13 +1,12 @@
 package com.hadooppractice.minmaxcount;
 
+import com.hadooppractice.utils.DateConverter;
+import org.apache.hadoop.io.Writable;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-
-import org.apache.hadoop.io.Writable;
 
 public class MinMaxCountTuple implements Writable {
 	
@@ -17,16 +16,36 @@ public class MinMaxCountTuple implements Writable {
 
 	@Override
 	public void readFields(DataInput input) throws IOException {
-		min = LocalDateTime.ofInstant(Instant.ofEpochMilli(input.readLong()), ZoneId.systemDefault());
-		max = LocalDateTime.ofInstant(Instant.ofEpochMilli(input.readLong()), ZoneId.systemDefault());
+		min = DateConverter.stringToDate(input.readUTF());
+		max = DateConverter.stringToDate(input.readUTF());
 		count = input.readLong();
 	}
 
 	@Override
 	public void write(DataOutput output) throws IOException {
-		output.writeLong(min.atZone(ZoneId.systemDefault()).toEpochSecond());
-		output.writeLong(max.atZone(ZoneId.systemDefault()).toEpochSecond());
+		output.writeUTF(DateConverter.dateToString(min));
+		output.writeUTF(DateConverter.dateToString(max));
 		output.writeLong(count);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof MinMaxCountTuple)) return false;
+
+		MinMaxCountTuple that = (MinMaxCountTuple) o;
+
+		if (getMin() != null ? !getMin().equals(that.getMin()) : that.getMin() != null) return false;
+		if (getMax() != null ? !getMax().equals(that.getMax()) : that.getMax() != null) return false;
+		return getCount() != null ? getCount().equals(that.getCount()) : that.getCount() == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getMin() != null ? getMin().hashCode() : 0;
+		result = 31 * result + (getMax() != null ? getMax().hashCode() : 0);
+		result = 31 * result + (getCount() != null ? getCount().hashCode() : 0);
+		return result;
 	}
 
 	public LocalDateTime getMin() {
@@ -55,7 +74,7 @@ public class MinMaxCountTuple implements Writable {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", min, max, count);
+		return String.format("%s %s %s", DateConverter.dateToString(getMin()), DateConverter.dateToString(getMax()), getCount());
 	}
 
 }

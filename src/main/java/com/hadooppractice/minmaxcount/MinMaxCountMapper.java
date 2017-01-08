@@ -1,21 +1,18 @@
 package com.hadooppractice.minmaxcount;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Map;
-
+import com.hadooppractice.utils.DateConverter;
+import com.hadooppractice.utils.XMLParser;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import com.hadooppractice.utils.XMLParser;
+import java.io.IOException;
+import java.util.Map;
 
 public class MinMaxCountMapper extends Mapper<Object, Text, Text, MinMaxCountTuple> {
 
-	private static final String TAG_ID = "Id";
-	private static final String TAG_MIN_DATE = "ExcerptPostId";
-	private static final String TAG_MAX_DATE = "WikiPostId";
+	private static final String TAG_ID = "UserId";
+	private static final String TAG_MIN_DATE = "CreationDate";
+	private static final String TAG_MAX_DATE = "CreationDate";
 
 	private Text keyOut = new Text();
 	private MinMaxCountTuple tuple = new MinMaxCountTuple();
@@ -26,10 +23,11 @@ public class MinMaxCountMapper extends Mapper<Object, Text, Text, MinMaxCountTup
 		
 		if (!isValid(row)) return;
 		
+		keyOut.set(row.get(TAG_ID));
 		tuple.setCount(1L);
-		tuple.setMax(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(row.get(TAG_MAX_DATE))), ZoneId.systemDefault()));
-		tuple.setMin(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(row.get(TAG_MIN_DATE))), ZoneId.systemDefault()));
-		keyOut.set(row.get(TAG_ID).substring(0, 1));
+		tuple.setMax(DateConverter.stringToDate(row.get(TAG_MAX_DATE)));
+		tuple.setMin(DateConverter.stringToDate(row.get(TAG_MIN_DATE)));
+
 		context.write(keyOut, tuple);
 	}
 

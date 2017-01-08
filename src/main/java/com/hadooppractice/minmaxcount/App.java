@@ -9,6 +9,21 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+/**
+ * Problem:
+ * Given a list of user's comments, determine the first and last time a user has commented
+ * and the total number of comments from that user.
+ *
+ * sample data:
+ *
+ * 	<row
+ * 	Id="2579740"
+ * 	PostId="2573882"
+ * 	Text="Are you getting any results? What are you specifying as the command text?"
+ * 	CreationDate="2010-04-04T08:48:51.347"
+ * 	UserId="95437"
+ * 	/>
+ */
 public class App {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
