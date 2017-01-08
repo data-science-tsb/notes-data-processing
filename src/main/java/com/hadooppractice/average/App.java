@@ -1,10 +1,7 @@
 package com.hadooppractice.average;
 
-import com.hadooppractice.firstlettercounter.FirstLetterMapper;
-import com.hadooppractice.firstlettercounter.FirstLetterReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
