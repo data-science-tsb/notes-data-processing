@@ -15,11 +15,7 @@ public class AverageReducer extends Reducer<Text, AverageTuple, Text, AverageTup
             Double temp = a.getAverageLength()*a.getCount() + b.getAverageLength()*b.getCount();
             Long currentCount = a.getCount() + b.getCount();
             temp = temp / currentCount;
-            AverageTuple c = new AverageTuple(temp, currentCount);
-
-            System.out.println(a + " + " + b + " = " + c);
-
-            return c;
+            return new AverageTuple(temp, currentCount);
         });
 
         context.write(key, computedAverage);
