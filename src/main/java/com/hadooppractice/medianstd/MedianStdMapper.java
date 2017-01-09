@@ -1,15 +1,30 @@
 package com.hadooppractice.medianstd;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class MedianStdMapper extends Mapper<Object, Text, Text, IntWritable> {
+import com.hadooppractice.utils.DateConverter;
+import com.hadooppractice.utils.XMLParser;
+
+public class MedianStdMapper extends Mapper<Object, Text, IntWritable, IntWritable> {
+
+	private static final String FIELD_DATE = "CreationDate";
+	private static final String FIELD_COMMENT = "Text";
+
+	private IntWritable outKey = new IntWritable(0);
+	private IntWritable outValue = new IntWritable(0);
 
 	@Override
-	protected void map(Object key, Text value, Mapper<Object, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException {
-		
+	protected void map(Object dontUseMe, Text value, Mapper<Object, Text, IntWritable, IntWritable>.Context context) throws IOException, InterruptedException {
+		Map<String, String> parsed = XMLParser.toMap(value);
+
+		outKey.set(DateConverter.stringToDate(parsed.get(FIELD_DATE)).getHour());
+		outValue.set(parsed.get(FIELD_COMMENT).length());
+
+		context.write(outKey, outValue);
 	}
 }

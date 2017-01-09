@@ -9,13 +9,13 @@ import org.apache.hadoop.io.Writable;
 public class MedianStdTuple implements Writable {
 
 	@Override
-	public void readFields(DataInput arg0) throws IOException {
-		
+	public void readFields(DataInput input) throws IOException {
+
 	}
 
 	@Override
-	public void write(DataOutput arg0) throws IOException {
-		
+	public void write(DataOutput output) throws IOException {
+
 	}
 
 }

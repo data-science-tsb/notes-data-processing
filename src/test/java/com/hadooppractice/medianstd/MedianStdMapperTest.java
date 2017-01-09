@@ -18,9 +18,9 @@ import com.hadooppractice.testutils.MockitoExtension;
 public class MedianStdMapperTest {
 
 	@Test
-	void shouldMapCorrectly(@Mock Mapper<Object, Text, Text, IntWritable>.Context mockContext) throws IOException, InterruptedException {
-		Text expectedTime = new Text("08");
-		IntWritable expectedLength = new IntWritable(63);
+	void shouldMapCorrectly(@Mock Mapper<Object, Text, IntWritable, IntWritable>.Context mockContext) throws IOException, InterruptedException {
+		IntWritable expectedTime = new IntWritable(8);
+		IntWritable expectedLength = new IntWritable(73);
 		
 		MedianStdMapper mapper = new MedianStdMapper();
 		mapper.map(null, new Text(COMMENT_ROW), mockContext);
