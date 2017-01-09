@@ -3,7 +3,13 @@ package com.hadooppractice.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.hadoop.io.Text;
+
 public class XMLParser {
+	
+	public static Map<String, String> toMap(Text text) {
+		return toMap(text.toString());
+	}
 
 	public static Map<String, String> toMap(String xml) {
 		Map<String, String> map = new HashMap<>();
