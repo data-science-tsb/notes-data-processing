@@ -1,18 +1,20 @@
 package com.hadooppractice.minmaxcount;
 
-import static org.mockito.Mockito.*;
-import static com.hadooppractice.testutils.SampleData.*;
+import static com.hadooppractice.testutils.SampleData.COMMENT_ROW;
+import static com.hadooppractice.testutils.SampleData.COMMENT_ROW_USER_ID;
+import static org.mockito.Mockito.verify;
 
-import com.hadooppractice.testutils.MockitoExtension;
-import com.hadooppractice.testutils.SampleData;
-import com.hadooppractice.utils.DateConverter;
+import java.io.IOException;
+
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
-import java.io.IOException;
+import com.hadooppractice.testutils.MockitoExtension;
+import com.hadooppractice.testutils.SampleData;
+import com.hadooppractice.utils.DateConverter;
 
 @ExtendWith(MockitoExtension.class)
 public class MinMaxCountMapperTest {
