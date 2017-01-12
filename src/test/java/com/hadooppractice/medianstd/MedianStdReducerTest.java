@@ -33,13 +33,12 @@ public class MedianStdReducerTest {
 		//1 + 1 + 4 + 0 + 0 + 4 = 10
 		//3.16227
 		Double expectedMedian = 11.0;
-		Double expectedStd = 3.16227;
-		
-		ArgumentCaptor<MedianStdTuple> captor = ArgumentCaptor.forClass(MedianStdTuple.class);
+		Double expectedStd = 1.41421;
 		
 		MedianStdReducer reducer = new MedianStdReducer();
 		reducer.reduce(key, values, mockContext);
 		
+		ArgumentCaptor<MedianStdTuple> captor = ArgumentCaptor.forClass(MedianStdTuple.class);
 		verify(mockContext).write(eq(key), captor.capture());
 
 		MedianStdTuple actualValue = captor.getValue();
