@@ -72,7 +72,7 @@ public class MedianStdTuple implements Writable {
 
 	@Override
 	public String toString() {
-		return "MedianStdTuple [median=" + median + ", standardDeviation=" + standardDeviation + "]";
+		return String.format("%s %s", median, standardDeviation);
 	}
 
 }

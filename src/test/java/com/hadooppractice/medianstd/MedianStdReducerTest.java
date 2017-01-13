@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -22,18 +23,13 @@ public class MedianStdReducerTest {
 	@Test
 	void shouldCalculateStandardDeviationAndMedian(@Mock Reducer<IntWritable, IntWritable, IntWritable, MedianStdTuple>.Context mockContext) throws IOException, InterruptedException {
 		IntWritable key = new IntWritable(1);
-		List<IntWritable> values = Arrays.asList(
-				new IntWritable(10), 
-				new IntWritable(12), 
-				new IntWritable(13), 
-				new IntWritable(11), 
-				new IntWritable(11), 
-				new IntWritable(9));
+		List<IntWritable> values = Arrays.asList(9, 2, 5, 4, 12, 7, 8, 11, 9, 3, 7, 4, 12, 5, 4, 10, 9, 6, 9, 4)
+				.stream()
+				.map(n -> new IntWritable(n))
+				.collect(Collectors.toList());
 		
-		//1 + 1 + 4 + 0 + 0 + 4 = 10
-		//3.16227
-		Double expectedMedian = 11.0;
-		Double expectedStd = 1.41421;
+		Double expectedMedian = 7.0;
+		Double expectedStd = 2.983;
 		
 		MedianStdReducer reducer = new MedianStdReducer();
 		reducer.reduce(key, values, mockContext);
@@ -42,7 +38,7 @@ public class MedianStdReducerTest {
 		verify(mockContext).write(eq(key), captor.capture());
 
 		MedianStdTuple actualValue = captor.getValue();
-		assertEquals(expectedStd, actualValue.getStandardDeviation(), 0.0001);
-		assertEquals(expectedMedian, actualValue.getMedian(), 0.0001);
+		assertEquals(expectedStd, actualValue.getStandardDeviation(), 0.001);
+		assertEquals(expectedMedian, actualValue.getMedian(), 0.001);
 	}
 }

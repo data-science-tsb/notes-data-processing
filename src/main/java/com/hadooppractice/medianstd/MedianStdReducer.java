@@ -2,8 +2,9 @@ package com.hadooppractice.medianstd;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -13,14 +14,14 @@ public class MedianStdReducer extends Reducer<IntWritable, IntWritable, IntWrita
 	//shit version: wont hold out for large data
 	@Override
 	protected void reduce(IntWritable key, Iterable<IntWritable> values, Reducer<IntWritable, IntWritable, IntWritable, MedianStdTuple>.Context context) throws IOException, InterruptedException {
-		MedianStdTuple outValue = new MedianStdTuple();
-
-		List<Integer> sortedData = new LinkedList<>();
-		values.forEach(val -> {
-			sortedData.add(val.get());
-		});
+		List<Integer> sortedData = StreamSupport
+				.stream(values.spliterator(), false)
+				.map(IntWritable::get)
+				.collect(Collectors.toList());
+		
 		Collections.sort(sortedData);
 
+		//calculate median
 		Double median = 0.0;
 		int mid = sortedData.size() / 2;
 		if (sortedData.size()%2 == 2) {
@@ -29,8 +30,21 @@ public class MedianStdReducer extends Reducer<IntWritable, IntWritable, IntWrita
 			median = (double) sortedData.get(mid);
 		}
 
+		//calculate standard deviation
+		//https://www.mathsisfun.com/data/standard-deviation-formulas.html
+		Double mean = sortedData.stream()
+				.mapToDouble(Integer::doubleValue)
+				.sum() / sortedData.size();
+		
+		Double meanOfDeviation = sortedData.stream()
+				.map(n -> Math.pow(n-mean, 2))
+				.reduce(0.0, Double::sum) / sortedData.size();
+		
+		Double std = Math.sqrt(meanOfDeviation);
+
+		MedianStdTuple outValue = new MedianStdTuple();
 		outValue.setMedian(median);
-		outValue.setStandardDeviation(0.00); //TODO: compute std
+		outValue.setStandardDeviation(std);
 		context.write(key, outValue);
 	}
 }
