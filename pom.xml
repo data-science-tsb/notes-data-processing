@@ -4,7 +4,7 @@
 
 	<groupId>com.lbibera</groupId>
 	<artifactId>hadoop-practice</artifactId>
-	<version>v1.3.1</version>
+	<version>v1.3.3</version>
 	<packaging>jar</packaging>
 
 	<name>hadoop-practice</name>

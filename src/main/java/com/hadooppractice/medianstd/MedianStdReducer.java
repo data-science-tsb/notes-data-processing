@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -22,7 +23,7 @@ public class MedianStdReducer extends Reducer<IntWritable, IntWritable, IntWrita
 		Collections.sort(sortedData);
 
 		//calculate median
-		Double median = 0.0;
+		Double median;
 		int mid = sortedData.size() / 2;
 		if (sortedData.size()%2 == 2) {
 			median = (double) (sortedData.get(mid) + sortedData.get(mid + 1))/2;
@@ -42,9 +43,10 @@ public class MedianStdReducer extends Reducer<IntWritable, IntWritable, IntWrita
 		
 		Double std = Math.sqrt(meanOfDeviation);
 
-		MedianStdTuple outValue = new MedianStdTuple();
-		outValue.setMedian(median);
-		outValue.setStandardDeviation(std);
-		context.write(key, outValue);
+        MedianStdTuple tuple = new MedianStdTuple();
+        tuple.setMedian(median);
+        tuple.setStandardDeviation(std);
+
+		context.write(key, tuple);
 	}
 }
