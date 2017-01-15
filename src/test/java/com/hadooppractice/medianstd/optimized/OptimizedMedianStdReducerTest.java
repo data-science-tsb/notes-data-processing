@@ -66,6 +66,10 @@ public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
     void shouldComputeMedianForEvenValues() {
 
         //1 2 2 3 10 11 11 12 12 12
+        //        == ==
+        //         10.5
+        double expectedMedian = 10.5;
+
         SortedMapWritable values = new SortedMapWritable();
         values.put(new IntWritable(1), new IntWritable(1));
         values.put(new IntWritable(2), new IntWritable(2));
@@ -74,7 +78,29 @@ public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
         values.put(new IntWritable(11), new IntWritable(2));
         values.put(new IntWritable(12), new IntWritable(3));
 
-        double expectedMedian = 10.5;
+        OptimizedMedianStdReducer reducer = new OptimizedMedianStdReducer();
+        double actualMedian = reducer.computeMedian(values, 10);
+
+        assertEquals(expectedMedian, actualMedian);
+    }
+
+    @Test
+    void shouldComputeMedianForEvenWithSimilarValues() {
+
+        //1 2 2 3 11 11 12 13 14 15
+        //        == ==
+        //          11
+        double expectedMedian = 11.0;
+
+        SortedMapWritable values = new SortedMapWritable();
+        values.put(new IntWritable(1), new IntWritable(1));
+        values.put(new IntWritable(2), new IntWritable(2));
+        values.put(new IntWritable(3), new IntWritable(1));
+        values.put(new IntWritable(11), new IntWritable(2));
+        values.put(new IntWritable(12), new IntWritable(1));
+        values.put(new IntWritable(13), new IntWritable(1));
+        values.put(new IntWritable(14), new IntWritable(1));
+        values.put(new IntWritable(15), new IntWritable(1));
 
         OptimizedMedianStdReducer reducer = new OptimizedMedianStdReducer();
         double actualMedian = reducer.computeMedian(values, 10);
@@ -86,6 +112,7 @@ public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
     void shouldComputeMedianForOddValues() {
 
         //1 2 2 3 10 11 11 12 12
+        //        ==
         SortedMapWritable values = new SortedMapWritable();
         values.put(new IntWritable(1), new IntWritable(1));
         values.put(new IntWritable(2), new IntWritable(2));
