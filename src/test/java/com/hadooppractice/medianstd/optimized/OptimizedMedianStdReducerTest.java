@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class OptimizedMedianStdReducerTest {
+public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
 
     @Test
     void shouldCalculateStandardDeviationAndMedian(@Mock Reducer<IntWritable, SortedMapWritable, IntWritable, MedianStdTuple>.Context mockContext) throws IOException, InterruptedException {
@@ -60,5 +60,45 @@ public class OptimizedMedianStdReducerTest {
         MedianStdTuple actualValue = captor.getValue();
         assertEquals(expectedStd, actualValue.getStandardDeviation(), 0.001);
         assertEquals(expectedMedian, actualValue.getMedian(), 0.001);
+    }
+
+    @Test
+    void shouldComputeMedianForEvenValues() {
+
+        //1 2 2 3 10 11 11 12 12 12
+        SortedMapWritable values = new SortedMapWritable();
+        values.put(new IntWritable(1), new IntWritable(1));
+        values.put(new IntWritable(2), new IntWritable(2));
+        values.put(new IntWritable(3), new IntWritable(1));
+        values.put(new IntWritable(10), new IntWritable(1));
+        values.put(new IntWritable(11), new IntWritable(2));
+        values.put(new IntWritable(12), new IntWritable(3));
+
+        double expectedMedian = 10.5;
+
+        OptimizedMedianStdReducer reducer = new OptimizedMedianStdReducer();
+        double actualMedian = reducer.computeMedian(values, 10);
+
+        assertEquals(expectedMedian, actualMedian);
+    }
+
+    @Test
+    void shouldComputeMedianForOddValues() {
+
+        //1 2 2 3 10 11 11 12 12
+        SortedMapWritable values = new SortedMapWritable();
+        values.put(new IntWritable(1), new IntWritable(1));
+        values.put(new IntWritable(2), new IntWritable(2));
+        values.put(new IntWritable(3), new IntWritable(1));
+        values.put(new IntWritable(10), new IntWritable(1));
+        values.put(new IntWritable(11), new IntWritable(2));
+        values.put(new IntWritable(12), new IntWritable(2));
+
+        double expectedMedian = 10;
+
+        OptimizedMedianStdReducer reducer = new OptimizedMedianStdReducer();
+        double actualMedian = reducer.computeMedian(values, 9);
+
+        assertEquals(expectedMedian, actualMedian);
     }
 }

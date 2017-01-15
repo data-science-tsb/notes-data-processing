@@ -65,7 +65,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.hadooppractice.medianstd.App</mainClass>
+							<mainClass>com.hadooppractice.medianstd.optimized.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
