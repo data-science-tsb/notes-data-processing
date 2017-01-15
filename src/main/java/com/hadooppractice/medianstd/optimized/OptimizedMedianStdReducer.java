@@ -26,8 +26,26 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
         double median = computeMedian(combinedValues, size);
 
         //find the mean
+        long sum = combinedValues.entrySet().stream().mapToLong((e) -> {
+                    long val = ((IntWritable)e.getKey()).get();
+                    long count = ((IntWritable)e.getValue()).get();
+                    return val * count;
+                })
+                .sum();
+        double mean = sum / size;
 
-        //find the
+        //find the std dev
+        double sumOfStd = combinedValues.entrySet().stream()
+                .map(n -> Math.pow(((IntWritable)n.getKey()).get()-mean, 2) * 1.0 *((IntWritable)n.getValue()).get())
+                .reduce(0.0, Double::sum) / size;
+
+        double std = Math.sqrt(sumOfStd);
+
+        MedianStdTuple outValue = new MedianStdTuple();
+        outValue.setMedian(median);
+        outValue.setStandardDeviation(std);
+
+        context.write(key, outValue);
     }
 
     /**
