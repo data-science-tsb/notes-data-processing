@@ -1,9 +1,8 @@
 package com.hadooppractice.medianstd.optimized;
 
+import com.hadooppractice.utils.SortedMapWritableUtil;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.SortedMapWritable;
-import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
@@ -15,20 +14,7 @@ public class OptimizedMedianStdCombiner extends Reducer<IntWritable, SortedMapWr
     protected void reduce(IntWritable key, Iterable<SortedMapWritable> values, Reducer<IntWritable, SortedMapWritable, IntWritable, SortedMapWritable>.Context context) throws IOException, InterruptedException {
         SortedMapWritable combined = StreamSupport
                 .stream(values.spliterator(), false)
-                .reduce(new SortedMapWritable(), (a, b) -> {
-                    //we are not savages! we are thread-safe!
-                    SortedMapWritable combinedMap = new SortedMapWritable(b);
-
-                    //get all the values for map A
-                    a.forEach((k, v) -> {
-                        IntWritable currentValue = (IntWritable) combinedMap.putIfAbsent(k, v);
-                        if (currentValue != v) {
-                            Integer newValue = currentValue.get() + ((IntWritable) v).get();
-                            combinedMap.put(k, new IntWritable(newValue));
-                        }
-                    });
-                    return b;
-                });
+                .reduce(new SortedMapWritable(), SortedMapWritableUtil::combineMap);
 
         context.write(key, combined);
     }

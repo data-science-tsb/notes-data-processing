@@ -28,6 +28,8 @@ public class OptimizedMedianStdCombinerTest {
 
         List<SortedMapWritable> values = Stream.of(
                 Pair.of(1, 1),
+                Pair.of(5, 1),
+                Pair.of(5, 1),
                 Pair.of(1, 3),
                 Pair.of(2, 7),
                 Pair.of(2, 5))
@@ -47,6 +49,7 @@ public class OptimizedMedianStdCombinerTest {
 
         SortedMapWritable combineMap = captor.getValue();
         assertEquals(combineMap.get(new IntWritable(1)), new IntWritable(4));
+        assertEquals(combineMap.get(new IntWritable(5)), new IntWritable(2));
         assertEquals(combineMap.get(new IntWritable(2)), new IntWritable(12));
     }
 }
