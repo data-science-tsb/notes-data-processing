@@ -69,7 +69,7 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
             if (currentIndex >= mid && !even) {
                 return ((IntWritable)entry.getKey()).get();
             } else if (currentIndex >= mid && even) {
-                return (previousEntry + ((IntWritable)entry.getKey()).get()) / 2;
+                return (previousEntry + ((IntWritable)entry.getKey()).get()) / 2.0;
             }
 
             previousEntry = ((IntWritable)entry.getKey()).get();
