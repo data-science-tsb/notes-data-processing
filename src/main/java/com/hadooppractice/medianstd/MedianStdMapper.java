@@ -22,9 +22,18 @@ public class MedianStdMapper extends Mapper<Object, Text, IntWritable, IntWritab
 	protected void map(Object dontUseMe, Text value, Mapper<Object, Text, IntWritable, IntWritable>.Context context) throws IOException, InterruptedException {
 		Map<String, String> parsed = XMLParser.toMap(value);
 
+		if (!isValidRow(parsed)) return;
+
 		outKey.set(DateConverter.stringToDate(parsed.get(FIELD_DATE)).getHour());
 		outValue.set(parsed.get(FIELD_COMMENT).length());
 
 		context.write(outKey, outValue);
+	}
+
+	private boolean isValidRow(Map<String, String> parsedRow) {
+		return parsedRow.get(FIELD_DATE) != null
+				&& !parsedRow.get(FIELD_DATE).isEmpty()
+				&& parsedRow.get(FIELD_COMMENT) != null
+				&& !parsedRow.get(FIELD_COMMENT).isEmpty();
 	}
 }

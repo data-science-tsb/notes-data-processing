@@ -1,6 +1,7 @@
 package com.hadooppractice.medianstd;
 
 import static com.hadooppractice.testutils.SampleData.COMMENT_ROW;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
@@ -26,5 +27,16 @@ public class MedianStdMapperTest {
 		mapper.map(null, new Text(COMMENT_ROW), mockContext);
 		
 		verify(mockContext).write(expectedTime, expectedLength);
+	}
+
+	@Test
+	void shouldHandleIncorrectFields(@Mock Mapper<Object, Text, IntWritable, IntWritable>.Context mockContext) throws Exception {
+		IntWritable expectedTime = new IntWritable(8);
+		IntWritable expectedLength = new IntWritable(73);
+
+		MedianStdMapper mapper = new MedianStdMapper();
+		mapper.map(null, new Text("<row>"), mockContext);
+
+		verify(mockContext, never()).write(expectedTime, expectedLength);
 	}
 }

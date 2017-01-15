@@ -22,7 +22,6 @@ public class TextCountMapperTest {
 		Text value = new Text("test1 test2 test3 test3");
 		mapper.map(null, value, mockContext);
 
-
         verify(mockContext).write(new Text("test1"), new LongWritable(1));
         verify(mockContext).write(new Text("test2"), new LongWritable(1));
         verify(mockContext, times(2)).write(new Text("test3"), new LongWritable(1));
