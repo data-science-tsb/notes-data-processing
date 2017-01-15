@@ -57,7 +57,7 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
      */
     protected double computeMedian(SortedMapWritable values, int size) {
 
-        boolean even = size % 2 == 0;
+        boolean odd = size % 2 == 1;
         int mid = (size / 2) + 1;
         int currentIndex = 0;
         int previousEntry = 0;
@@ -67,11 +67,11 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
             currentIndex += currentSize;
 
             boolean passMid = currentIndex >= mid;
-            if (passMid && !even) {
+            if (passMid && odd) {
                 return ((IntWritable) entry.getKey()).get();
             } else if (passMid && (currentIndex-currentSize < mid-1)) {
                 return ((IntWritable) entry.getKey()).get();
-            } else if (passMid && even) {
+            } else if (passMid) {
                 return (previousEntry + ((IntWritable)entry.getKey()).get()) / 2.0;
             }
 
