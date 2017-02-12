@@ -1,0 +1,8 @@
+---
+- name: Hadoop Cluster
+  hosts: localhost
+  become: False
+  vars_files:
+    - "private_vars/config.yaml"
+  roles:
+    - common
