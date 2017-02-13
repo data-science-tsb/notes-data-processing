@@ -3,6 +3,12 @@ Source: https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common
 
 ## Installation Instructions:
 
+### AWS Security Group Consideration
+ports:
+22 - ssh
+9000 - namenode
+9870 - namenode web interface
+
 ### Common
 - install java 8
 ```
@@ -51,6 +57,67 @@ mv hadoop-3.0.0-alpha2 hadoop
 ./hadoop/bin/hadoop
 mkdir input
 cp hadoop/*.txt input
-./hadoop/bin/hadoop jar hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar grep input output 'dfs[a-z.]+'
+./hadoop/bin/hadoop jar hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
 cat output/*
+```
+
+### Pseudo-Distributed Operation
+- hadoop/etc/hadoop/core-site.xml
+```
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+</configuration>
+```
+
+- hadoop/etc/hadoop/hdfs-site.xml
+```
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+</configuration>
+```
+
+- format the filesystem
+```
+./hadoop/bin/hdfs namenode -format
+```
+
+- start the NameNode, SecondaryNameNode and DataNode
+```
+./hadoop/sbin/start-dfs.sh
+```
+
+- check HDFS dashboard
+```
+http://localhost:9870/
+```
+
+- create the HDFS directories and copy some files
+```
+./hadoop/bin/hdfs dfs -mkdir /user
+./hadoop/bin/hdfs dfs -mkdir /user/ec2-user
+./hadoop/bin/hdfs dfs -mkdir /user/dr.who
+./hadoop/bin/hdfs dfs -mkdir /input
+./hadoop/bin/hdfs dfs -rm -r hadoop/*.txt /user/ec2-user/output
+./hadoop/bin/hdfs dfs -put hadoop/*.txt /user/ec2-user/input
+```
+
+- run the wordcount example
+```
+./hadoop/bin/hadoop jar hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
+```
+
+- check the output
+```
+./hadoop/bin/hdfs dfs -get /user/ec2-user/output output
+```
+
+- optional: stop the daemon
+```
+./hadoop/sbin/stop-dfs.sh
 ```
