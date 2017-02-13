@@ -7,7 +7,9 @@ Source: https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common
 ports:
 22 - ssh
 9000 - namenode
+9864 - datanode web interface
 9870 - namenode web interface
+8088 - yarn web interface
 
 ### Common
 - install java 8
@@ -67,7 +69,7 @@ cat output/*
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://localhost:9000</value>
+        <value>hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000</value>
     </property>
 </configuration>
 ```
@@ -87,14 +89,14 @@ cat output/*
 ./hadoop/bin/hdfs namenode -format
 ```
 
-- start the NameNode, SecondaryNameNode and DataNode
+- start the NameNode, SecondaryNameNode and DataNode daemon
 ```
 ./hadoop/sbin/start-dfs.sh
 ```
 
 - check HDFS dashboard
 ```
-http://localhost:9870/
+http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870/
 ```
 
 - create the HDFS directories and copy some files
@@ -117,7 +119,43 @@ http://localhost:9870/
 ./hadoop/bin/hdfs dfs -get /user/ec2-user/output output
 ```
 
-- optional: stop the daemon
+- optional: stop the NameNode, SecondaryNameNode and DataNode daemon
 ```
 ./hadoop/sbin/stop-dfs.sh
+```
+
+- YARN pseudo-distributed mode
+
+- hadoop/etc/hadoop/mapred-site.xml
+```
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+</configuration>
+```
+
+- hadoop/etc/hadoop/yarn-site.xml
+```
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.env-whitelist</name>
+        <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    </property>
+</configuration>
+```
+
+- start the YARN daemon
+```
+hadoop/sbin/start-yarn.sh
+```
+
+- check YARN dashboard
+```
+http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:8088/
 ```
