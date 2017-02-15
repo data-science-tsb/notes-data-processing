@@ -10,6 +10,7 @@ ports:
 9864 - datanode web interface
 9870 - namenode web interface
 8088 - yarn web interface
+8050 - yarn port
 
 ### Common
 - install java 8
@@ -158,4 +159,9 @@ hadoop/sbin/start-yarn.sh
 - check YARN dashboard
 ```
 http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:8088/
+```
+
+- optional: stop YARN
+```
+./hadoop/sbin/stop-yarn.sh
 ```
