@@ -84,3 +84,43 @@ ec2-54-187-55-192.us-west-2.compute.amazonaws.com
 ```
 http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870
 ```
+
+- configure datanode files in hadoop/etc/hadoop/hdfs-site.xml
+```
+<configuration>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/home/ec2-user/hadoop-data</value>
+    </property>
+</configuration>
+```
+
+- for each DataNode (Slave)
+```
+./hadoop/bin/hdfs --daemon start datanode
+```
+
+- start YARN (ResourceManager)
+```
+./hadoop/bin/yarn --daemon start resourcemanager
+```
+
+- check YARN dashboard
+```
+http://ec2-54-191-254-130.us-west-2.compute.amazonaws.com:8088/cluster/nodes
+```
+
+- configure datanode files in hadoop/etc/hadoop/yarn-site.xml (Slave)
+```
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>ec2-54-191-254-130.us-west-2.compute.amazonaws.com</value>
+    </property>
+</configuration>
+```
+
+- for each nodemanager (Slave)
+```
+./hadoop/bin/yarn --daemon start nodemanager
+```
