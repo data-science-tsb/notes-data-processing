@@ -92,6 +92,10 @@ http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870
         <name>dfs.datanode.data.dir</name>
         <value>/home/ec2-user/hadoop-data</value>
     </property>
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>ec2-54-202-211-108.us-west-2.compute.amazonaws.com:9864</value>
+    </property>
 </configuration>
 ```
 
@@ -111,11 +115,16 @@ http://ec2-54-191-254-130.us-west-2.compute.amazonaws.com:8088/cluster/nodes
 ```
 
 - configure datanode files in hadoop/etc/hadoop/yarn-site.xml (Slave)
+- pay attention on the nodemanager hostname
 ```
 <configuration>
     <property>
         <name>yarn.resourcemanager.hostname</name>
         <value>ec2-54-191-254-130.us-west-2.compute.amazonaws.com</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.hostname</name>
+        <value>ec2-54-202-211-108.us-west-2.compute.amazonaws.com</value>
     </property>
 </configuration>
 ```
