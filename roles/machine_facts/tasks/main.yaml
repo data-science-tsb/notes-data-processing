@@ -1,5 +1,5 @@
 ---
-  - name: Discover NameNode Machine
+  - name: Discover Host EC2 Instances
     ec2_remote_facts:
       aws_access_key: "{{ aws_key_id }}"
       aws_secret_key: "{{ aws_key_secret }}"
@@ -7,11 +7,14 @@
       filters: 
         instance-state-name: running
         "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
-        "tag:HadoopRole": namenode
-    register: namenode_machines
+        "tag:HadoopRole": "{{ item }}"
+    register: "{{ item }}_machine"
+    with_items: ['namenode', 'resourcemanager', 'worker']
 
   - name: Set NameNode Host
     add_host:
       groups: namenode 
-      hostname: "{{ item.public_ip_address }}"
-    with_items: "{{ namenode_machines }}"
+      hostname: "{{ item[1].public_ip_address }}"
+    with_nested:
+      - ['namenode', 'resourcemanager', 'worker']
+      - "{{ item[0]}}_machine"
