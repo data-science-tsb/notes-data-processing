@@ -1,0 +1,11 @@
+---
+  - name: Discover NameNode Machine
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": namenode
+    register: namenode_machines
