@@ -18,3 +18,10 @@
     with_nested:
       - ['namenode', 'resourcemanager', 'worker']
       - "{{ item[0]}}_machine"
+
+  - debug:
+      message: "Group: {{item[0]}} Host: {{item[1]}}.hostname"
+      verbosity: 1
+    with_items: 
+      - "{{ groups }}"
+      - "{{ groups[item[0]] }}"
