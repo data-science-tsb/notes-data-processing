@@ -2,11 +2,11 @@ aws_key_id: xxx
 aws_key_secret: xxx
 aws_image_master: ami-xxxxx
 aws_image_slave: ami-xxxx
-aws_slave_count: 2
 aws_instance_type: t2.xlarge
 aws_security_group: sg-xxxxxx
 aws_region: us-west-2
 
-hadoop_cluster_name: namespace_conflict
+hadoop_cluster_name: cluster0045
+hadoop_slave_count: 2
 
 environment_type: PRODUCTION

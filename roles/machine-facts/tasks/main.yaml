@@ -9,3 +9,9 @@
         "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
         "tag:HadoopRole": namenode
     register: namenode_machines
+
+  - name: Set NameNode Host
+    add_host:
+      groups: namenode 
+      hostname: "{{ item.public_ip_address }}"
+    with_items: "{{ namenode_machines }}"

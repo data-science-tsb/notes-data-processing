@@ -1,8 +1,8 @@
 ---
-- name: Hadoop Cluster
+- name: Machine Facts
   hosts: localhost
   become: False
   vars_files:
     - "private_vars/config.yaml"
   roles:
-    - common
+    - machine_facts
