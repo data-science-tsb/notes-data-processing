@@ -24,9 +24,9 @@ import static org.mockito.Mockito.verify;
 public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
 
     @Test
-    void shouldCalculateStandardDeviationAndMedian(@Mock Reducer<IntWritable, SortedMapWritable, IntWritable, MedianStdTuple>.Context mockContext) throws IOException, InterruptedException {
+    void shouldCalculateStandardDeviationAndMedian(@Mock Reducer<IntWritable, SortedMapWritable<IntWritable>, IntWritable, MedianStdTuple>.Context mockContext) throws IOException, InterruptedException {
         IntWritable key = new IntWritable(1);
-        List<SortedMapWritable> values = Stream
+        List<SortedMapWritable<IntWritable>> values = Stream
                 .of(
                         Pair.of(9, 4),
                         Pair.of(2, 1),
@@ -42,7 +42,7 @@ public class OptimizedMedianStdReducerTest extends  OptimizedMedianStdReducer {
                         Pair.of(6, 1)
                 )
                 .map(n -> {
-                    SortedMapWritable sortedMapWritable = new SortedMapWritable();
+                    SortedMapWritable<IntWritable> sortedMapWritable = new SortedMapWritable();
                     sortedMapWritable.put(new IntWritable(n.getKey()), new IntWritable(n.getValue()));
                     return sortedMapWritable;
                 })

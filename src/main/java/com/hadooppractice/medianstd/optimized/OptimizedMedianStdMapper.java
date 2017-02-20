@@ -11,14 +11,14 @@ import org.apache.hadoop.mapreduce.Mapper;
 import java.io.IOException;
 import java.util.Map;
 
-public class OptimizedMedianStdMapper extends Mapper<Object, Text, IntWritable, SortedMapWritable> {
+public class OptimizedMedianStdMapper extends Mapper<Object, Text, IntWritable, SortedMapWritable<IntWritable>> {
 
     private static final String FIELD_DATE = "CreationDate";
     private static final String FIELD_COMMENT = "Text";
     private static final IntWritable ONE = new IntWritable(1);
 
     @Override
-    protected void map(Object key, Text value, Mapper<Object, Text, IntWritable, SortedMapWritable>.Context context) throws IOException, InterruptedException {
+    protected void map(Object key, Text value, Mapper<Object, Text, IntWritable, SortedMapWritable<IntWritable>>.Context context) throws IOException, InterruptedException {
         Map<String, String> parsed = XMLParser.toMap(value);
 
         if (isNotValid(parsed)) return;

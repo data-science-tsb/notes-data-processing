@@ -12,14 +12,14 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWritable, IntWritable, MedianStdTuple> {
+public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWritable<IntWritable>, IntWritable, MedianStdTuple> {
 
     @Override
-    protected void reduce(IntWritable key, Iterable<SortedMapWritable> values, Reducer<IntWritable, SortedMapWritable, IntWritable, MedianStdTuple>.Context context) throws IOException, InterruptedException {
+    protected void reduce(IntWritable key, Iterable<SortedMapWritable<IntWritable>> values, Reducer<IntWritable, SortedMapWritable<IntWritable>, IntWritable, MedianStdTuple>.Context context) throws IOException, InterruptedException {
 
-        SortedMapWritable combinedValues = StreamSupport
+        SortedMapWritable<IntWritable> combinedValues = StreamSupport
                 .stream(values.spliterator(), false)
-                .reduce(new SortedMapWritable(), SortedMapWritableUtil::combineMap);
+                .reduce(new SortedMapWritable<>(), SortedMapWritableUtil::combineMap);
 
         //find the median
         int size = computeSize(combinedValues);
@@ -27,7 +27,7 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
 
         //find the mean
         long sum = combinedValues.entrySet().stream().mapToLong((e) -> {
-                    long val = ((IntWritable)e.getKey()).get();
+                    long val = e.getKey().get();
                     long count = ((IntWritable)e.getValue()).get();
                     return val * count;
                 })
@@ -36,7 +36,7 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
 
         //find the std dev
         double sumOfStd = combinedValues.entrySet().stream()
-                .map(n -> Math.pow(((IntWritable)n.getKey()).get()-mean, 2) * 1.0 *((IntWritable)n.getValue()).get())
+                .map(n -> Math.pow((n.getKey()).get()-mean, 2) * 1.0 * ((IntWritable)n.getValue()).get())
                 .reduce(0.0, Double::sum) / size;
 
         double std = Math.sqrt(sumOfStd);
@@ -53,7 +53,7 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
      * @param values
      * @return
      */
-    protected int computeSize(SortedMapWritable values) {
+    protected int computeSize(SortedMapWritable<IntWritable> values) {
         return values.entrySet()
                 .stream()
                 .mapToInt((e) -> {
@@ -73,27 +73,27 @@ public class OptimizedMedianStdReducer extends Reducer<IntWritable, SortedMapWri
      * @param size
      * @return
      */
-    protected double computeMedian(SortedMapWritable values, int size) {
+    protected double computeMedian(SortedMapWritable<IntWritable> values, int size) {
 
         boolean odd = size % 2 == 1;
         int mid = (size / 2) + 1;
         int currentIndex = 0;
         int previousEntry = 0;
 
-        for (Map.Entry<WritableComparable, Writable> entry : values.entrySet()) {
+        for (Map.Entry<IntWritable, Writable> entry : values.entrySet()) {
             int currentSize = ((IntWritable)entry.getValue()).get();
             currentIndex += currentSize;
 
             boolean passMid = currentIndex >= mid;
             if (passMid && odd) {
-                return ((IntWritable) entry.getKey()).get();
+                return  entry.getKey().get();
             } else if (passMid && (currentIndex-currentSize < mid-1)) {
-                return ((IntWritable) entry.getKey()).get();
+                return entry.getKey().get();
             } else if (passMid) {
-                return (previousEntry + ((IntWritable)entry.getKey()).get()) / 2.0;
+                return (previousEntry + entry.getKey().get()) / 2.0;
             }
 
-            previousEntry = ((IntWritable)entry.getKey()).get();
+            previousEntry = entry.getKey().get();
         }
 
         return 0;
