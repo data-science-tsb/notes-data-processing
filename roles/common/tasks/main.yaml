@@ -44,5 +44,5 @@
       dest: "{{ host_environment_file }}"
       state: present
       regexp: "^export PATH=$PATH:$HADOOP_HOME"
-      line: "export PATH=$PATH:$HADOOP_HOME={{ hadoop_install_dir }}/bin:$HADOOP_HOME={{ hadoop_install_dir }}/sbin"
+      line: "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
   
