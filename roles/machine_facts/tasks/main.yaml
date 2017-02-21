@@ -58,7 +58,7 @@
 
   - name: Set Worker Host
     add_host:
-      groups: resourcemanager 
+      groups: worker 
       hostname: "{{ item.public_ip_address }}"
     with_items: "{{ worker_machine.instances }}"
 
