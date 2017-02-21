@@ -7,14 +7,13 @@
       filters: 
         instance-state-name: running
         "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
-        "tag:HadoopRole": "{{ item }}"
-    register: "{{ item }}_machine"
-    with_items: ['namenode', 'resourcemanager', 'worker']
+        "tag:HadoopRole": namenode
+    register: namenode_machine
 
   - name: Set NameNode Host
     add_host:
       groups: namenode 
-      hostname: "{{ item[1].public_ip_address }}"
+      hostname: "{{ item.public_ip_address }}"
     with_items: "{{ namenode_machine }}"
 
   - debug:
