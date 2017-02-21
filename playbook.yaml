@@ -7,3 +7,12 @@
     - group_vars/config.yaml
   roles:
     - machine_facts
+
+- name: Common Installation
+  hosts: namenode, resourcemanager, worker
+  become: True
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - common
