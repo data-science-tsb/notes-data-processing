@@ -15,9 +15,7 @@
     add_host:
       groups: namenode 
       hostname: "{{ item[1].public_ip_address }}"
-    with_nested:
-      - ['namenode', 'resourcemanager', 'worker']
-      - "{{ item[0] }}_machine"
+    with_items: "{{ namenode_machine }}"
 
   - debug:
       message: "Group: {{item[0]}} Host: {{item[1]}}.hostname"
