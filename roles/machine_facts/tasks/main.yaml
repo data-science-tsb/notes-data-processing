@@ -14,7 +14,7 @@
     add_host:
       groups: namenode 
       hostname: "{{ item.public_ip_address }}"
-    with_items: "{{ namenode_machine }}"
+    with_items: "{{ namenode_machine.instances }}"
 
   - debug:
       message: "Group: {{item[0]}} Host: {{item[1]}}.hostname"
