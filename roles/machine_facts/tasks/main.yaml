@@ -1,4 +1,5 @@
 ---
+  #tidy this up later: https://docs.ansible.com/ansible/ec2_remote_facts_module.html
   - name: Discover NameNode EC2 Instances
     ec2_remote_facts:
       aws_access_key: "{{ aws_key_id }}"
