@@ -17,7 +17,7 @@
     with_items: "{{ namenode_machine.instances }}"
 
   - debug:
-      message: "NameNode: {{ item }}"
+      msg: "NameNode: {{ item }}"
       verbosity: 1
     with_items: 
       - "{{ groups['namenode'] }}"
@@ -40,7 +40,7 @@
     with_items: "{{ resourcemanager_machine.instances }}"
 
   - debug:
-      message: "ResourceManager: {{ item }}"
+      msg: "ResourceManager: {{ item }}"
       verbosity: 1
     with_items: 
       - "{{ groups['resourcemanager'] }}"
@@ -63,7 +63,7 @@
     with_items: "{{ worker_machine.instances }}"
 
   - debug:
-      message: "Worker: {{ item }}"
+      msg: "Worker: {{ item }}"
       verbosity: 1
     with_items: 
       - "{{ groups['worker'] }}"
