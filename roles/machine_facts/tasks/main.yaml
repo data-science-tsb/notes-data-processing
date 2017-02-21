@@ -1,5 +1,5 @@
 ---
-  - name: Discover Host EC2 Instances
+  - name: Discover NameNode EC2 Instances
     ec2_remote_facts:
       aws_access_key: "{{ aws_key_id }}"
       aws_secret_key: "{{ aws_key_secret }}"
@@ -17,7 +17,53 @@
     with_items: "{{ namenode_machine.instances }}"
 
   - debug:
-      var: "{{ item }}"
+      message: "NameNode: {{ item }}"
       verbosity: 1
     with_items: 
       - "{{ groups['namenode'] }}"
+
+  - name: Discover ResourceManager EC2 Instances
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": resourcemanager
+    register: resourcemanager_machine
+
+  - name: Set ResourceManager Host
+    add_host:
+      groups: resourcemanager 
+      hostname: "{{ item.public_ip_address }}"
+    with_items: "{{ resourcemanager_machine.instances }}"
+
+  - debug:
+      message: "ResourceManager: {{ item }}"
+      verbosity: 1
+    with_items: 
+      - "{{ groups['resourcemanager'] }}"
+
+  - name: Discover Worker EC2 Instances
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": worker
+    register: worker_machine
+
+  - name: Set Worker Host
+    add_host:
+      groups: resourcemanager 
+      hostname: "{{ item.public_ip_address }}"
+    with_items: "{{ worker_machine.instances }}"
+
+  - debug:
+      message: "Worker: {{ item }}"
+      verbosity: 1
+    with_items: 
+      - "{{ groups['worker'] }}"
