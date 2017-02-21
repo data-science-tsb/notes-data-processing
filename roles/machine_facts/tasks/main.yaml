@@ -17,8 +17,7 @@
     with_items: "{{ namenode_machine.instances }}"
 
   - debug:
-      message: "Group: {{item[0]}} Host: {{item[1]}}.hostname"
+      message: "Namenode IP: {{ item.hostname }}"
       verbosity: 1
     with_items: 
-      - "{{ groups }}"
-      - "{{ groups[item[0]] }}"
+      - "{{ groups['namenode'] }}"
