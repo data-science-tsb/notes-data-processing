@@ -39,10 +39,18 @@
       regexp: "^export HADOOP_HOME"
       line: "export HADOOP_HOME={{ hadoop_install_dir }}"
 
+  #im bad at regexp, refer to this :D
+  #http://www.regular-expressions.info/refcharacters.html
   - name: Add Hadoop to Path
     lineinfile: 
       dest: "{{ host_environment_file }}"
       state: present
-      regexp: "^export PATH=$PATH:$HADOOP_HOME"
+      regexp: "^export PATH=\$PATH:\$HADOOP_HOME"
       line: "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
   
+#Config Files
+  - name: Common Configuration
+    template:
+      src: "{{ item }}.xml"
+      dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
+    with_items: ['core-site', 'hdfs-site', 'mapred-site', 'yarn-site']
