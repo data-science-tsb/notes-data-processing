@@ -1,0 +1,22 @@
+<configuration>
+    <property>
+        <name>yarn.acl.enable</name>
+        <value>false</value>
+    </property>
+    
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>{{ host }}</value>
+    </property>
+
+    <property>
+        <name>yarn.resourcemanager.scheduler.class</name>
+        <value>CapacityScheduler</value>
+    </property>
+
+</configuration>

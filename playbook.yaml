@@ -15,4 +15,31 @@
     - private_vars/config.yaml
     - group_vars/config.yaml
   roles:
-    - common
+    - hadoop_common
+
+- name: NameNode Installation
+  hosts: namenode
+  become: True
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_namenode
+
+- name: ResourceManager Installation
+  hosts: resourcemanager
+  become: True
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_resourcemanager
+
+- name: Worker Installation
+  hosts: worker
+  become: True
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_worker

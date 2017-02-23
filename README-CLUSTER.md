@@ -64,21 +64,6 @@
 </configuration>
 ```
 
-- configure hadoop/etc/hadoop/yarn-site.xml (NodeManager)
-http://stackoverflow.com/questions/30921838/auxservicemapreduce-shuffle-does-not-exist-on-hive-1-2-0
-```xml
-<configuration>
-    <property>
-        <name>yarn.nodemanager.aux-services</name>
-        <value>mapreduce_shuffle</value>
-    </property>
-    <property>
-	    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
-	    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
-  	</property>
-</configuration>
-```
-
 - configure hadoop/etc/hadoop/workers (NameNode and ResourceManager)
 ```
 ec2-54-202-211-108.us-west-2.compute.amazonaws.com
@@ -141,6 +126,14 @@ http://ec2-54-191-254-130.us-west-2.compute.amazonaws.com:8088/cluster/nodes
         <name>yarn.nodemanager.hostname</name>
         <value>ec2-54-202-211-108.us-west-2.compute.amazonaws.com</value>
     </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+	    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+	    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  	</property>
 </configuration>
 ```
 

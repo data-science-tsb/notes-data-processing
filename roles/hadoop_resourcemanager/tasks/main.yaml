@@ -1,0 +1,7 @@
+---
+  #Config Files
+  - name: ResourceManager Configuration
+    template:
+      src: "{{ item }}.xml"
+      dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
+    with_items: ['yarn-site']

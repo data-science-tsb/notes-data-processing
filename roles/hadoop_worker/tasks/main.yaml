@@ -1,0 +1,7 @@
+---
+  #Config Files
+  - name: DataNode and NodeManager Configuration
+    template:
+      src: "{{ item }}.xml"
+      dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
+    with_items: ['hdfs-site', 'yarn-site']

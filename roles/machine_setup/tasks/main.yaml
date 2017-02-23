@@ -1,3 +1,4 @@
+#Create the EC2 Instances Needed for the Cluster
 ---
   - name: AWS Security Group
     local_action:

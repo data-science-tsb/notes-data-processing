@@ -10,6 +10,6 @@ aws_security_group: sg-xxxxxx
 aws_region: us-west-2
 
 hadoop_cluster_name: cluster0045
-hadoop_slave_count: 2
+hadoop_worker_count: 2
 
 environment_type: PRODUCTION

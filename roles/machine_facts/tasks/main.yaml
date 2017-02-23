@@ -1,3 +1,4 @@
+#Gather the Facts for the EC2 Instances and Assign them to Hosts
 ---
   #tidy this up later: https://docs.ansible.com/ansible/ec2_remote_facts_module.html
   - name: Discover NameNode EC2 Instances

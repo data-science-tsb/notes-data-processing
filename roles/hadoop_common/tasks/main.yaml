@@ -1,6 +1,8 @@
+#Run Common Tasks for all Daemons
+#Reference:
+#http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html
 ---
-#Java Installation
-
+  #Java Installation
   - name: Install Java8
     yum: 
       name: java-1.8.0-openjdk 
@@ -17,9 +19,7 @@
       regexp: "^export JAVA_HOME" 
       line: "export JAVA_HOME={{ java_install_path }}"
 
-
-#Hadoop Installation
-
+  #Hadoop Installation
   - name: Download Hadoop
     get_url:
       url: "{{ hadoop_download_src }}"
@@ -39,18 +39,23 @@
       regexp: "^export HADOOP_HOME"
       line: "export HADOOP_HOME={{ hadoop_install_dir }}"
 
-  #im bad at regexp, refer to this :D
-  #http://www.regular-expressions.info/refcharacters.html
   - name: Add Hadoop to Path
     lineinfile: 
       dest: "{{ host_environment_file }}"
       state: present
+      #im bad at regexp, refer to this :D
+      #http://www.regular-expressions.info/refcharacters.html
       regexp: "^export PATH=\\$PATH:\\$HADOOP_HOME"
       line: "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
-  
-#Config Files
-  - name: Common Configuration
+
+  #Missing this Step:
+  #Administrators should use the etc/hadoop/hadoop-env.sh and optionally the etc/hadoop/mapred-env.sh and etc/hadoop/yarn-env.sh scripts to do site-specific customization of the Hadoop daemons’ process environment.
+  #At the very least, you must specify the JAVA_HOME so that it is correctly defined on each remote node.
+  #Administrators can configure individual daemons using the configuration options shown below in the table:
+
+  #Config Files
+  - name: Configuration for all Daemons
     template:
       src: "{{ item }}.xml"
       dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
-    with_items: ['core-site', 'hdfs-site', 'mapred-site', 'yarn-site']
+    with_items: ['core-site', 'mapred-site']
