@@ -11,7 +11,7 @@
 
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>{{ host }}</value>
+        <value>{{ inventory_hostname }}</value>
     </property>
 
     <property>

@@ -16,6 +16,7 @@
     add_host:
       groups: namenode 
       hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
     with_items: "{{ namenode_machine.instances }}"
 
   - debug:
@@ -39,6 +40,7 @@
     add_host:
       groups: resourcemanager 
       hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
     with_items: "{{ resourcemanager_machine.instances }}"
 
   - debug:
@@ -62,6 +64,7 @@
     add_host:
       groups: worker 
       hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
     with_items: "{{ worker_machine.instances }}"
 
   - debug:
