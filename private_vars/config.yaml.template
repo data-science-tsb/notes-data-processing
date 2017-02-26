@@ -12,3 +12,5 @@ hadoop_cluster_name: cluster0045
 hadoop_worker_count: 2
 
 environment_type: PRODUCTION
+
+setup_delay: 200

@@ -19,7 +19,7 @@
 
 - name: Common Installation
   hosts: namenode, resourcemanager, worker
-  become: True
+  become: False
   vars_files:
     - private_vars/config.yaml
     - group_vars/config.yaml
@@ -28,7 +28,7 @@
 
 - name: NameNode Installation
   hosts: namenode
-  become: True
+  become: False
   vars_files:
     - private_vars/config.yaml
     - group_vars/config.yaml
@@ -37,7 +37,7 @@
 
 - name: ResourceManager Installation
   hosts: resourcemanager
-  become: True
+  become: False
   vars_files:
     - private_vars/config.yaml
     - group_vars/config.yaml
@@ -46,7 +46,7 @@
 
 - name: Worker Installation
   hosts: worker
-  become: True
+  become: False
   vars_files:
     - private_vars/config.yaml
     - group_vars/config.yaml

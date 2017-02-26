@@ -45,3 +45,7 @@
       - { name: "{{ hadoop_cluster_name }}_NameNode", role: namenode, count: 1 }
       - { name: "{{ hadoop_cluster_name }}_ResourceManager", role: resourcemanager, count: 1 }
       - { name: "{{ hadoop_cluster_name }}_Worker", role: worker, count: "{{ hadoop_worker_count }}" }
+
+  - name: Pause... Wait for the Initialization to Complete Before The Machines can Be Reachable!!!
+    pause:
+      seconds: "{{ setup_delay }}"

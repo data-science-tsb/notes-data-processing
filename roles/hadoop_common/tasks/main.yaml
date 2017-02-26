@@ -4,11 +4,13 @@
 ---
   #Java Installation
   - name: Install Java8
-    yum: 
+    become: Yes
+    yum:
       name: java-1.8.0-openjdk 
       state: latest
 
   - name: Remove Java7
+    become: Yes
     yum: 
       name: java-1.7.0-openjdk 
       state: absent
@@ -38,6 +40,7 @@
       state: present
       regexp: "^export HADOOP_HOME"
       line: "export HADOOP_HOME={{ hadoop_install_dir }}"
+    become: True
 
   - name: Add Hadoop to Path
     lineinfile: 
@@ -47,6 +50,7 @@
       #http://www.regular-expressions.info/refcharacters.html
       regexp: "^export PATH=\\$PATH:\\$HADOOP_HOME"
       line: "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
+    become: True
 
   #Missing this Step:
   #Administrators should use the etc/hadoop/hadoop-env.sh and optionally the etc/hadoop/mapred-env.sh and etc/hadoop/yarn-env.sh scripts to do site-specific customization of the Hadoop daemons’ process environment.

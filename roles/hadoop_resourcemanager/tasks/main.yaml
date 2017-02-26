@@ -5,3 +5,10 @@
       src: "{{ item }}.xml"
       dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
     with_items: ['yarn-site']
+
+  - name: Start ResourceManager
+    shell: "{{ hadoop_install_dir }}/bin/yarn --daemon start resourcemanager"
+
+  - name: Pause... Give The ResourceManager a few Seconds to Wake Up!!!
+    pause:
+      seconds: 15

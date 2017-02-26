@@ -5,3 +5,17 @@
       src: "{{ item }}.xml"
       dest: "{{ hadoop_install_dir }}/etc/hadoop/{{ item }}.xml"
     with_items: ['hdfs-site']
+
+  - name: Format NameNode
+    shell: "{{ hadoop_install_dir }}/bin/hdfs namenode -format {{ hadoop_cluster_name }}"
+
+  - name: Pause... Format!!!
+    pause:
+      seconds: 5
+
+  - name: Start NameNode
+    shell: "{{ hadoop_install_dir }}/bin/hdfs --daemon start namenode"
+
+  - name: Pause... Give The NameNode a few Seconds to Wake Up!!!
+    pause:
+      seconds: 15
