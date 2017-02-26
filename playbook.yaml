@@ -1,5 +1,14 @@
 ---
-- name: Machine Facts
+- name: Machine Setup (AWS)
+  hosts: localhost
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - machine_setup_aws
+
+- name: Machine Facts (AWS)
   hosts: localhost
   become: False
   vars_files:
