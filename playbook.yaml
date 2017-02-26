@@ -6,7 +6,7 @@
     - private_vars/config.yaml
     - group_vars/config.yaml
   roles:
-    - machine_facts
+    - machine_facts_aws
 
 - name: Common Installation
   hosts: namenode, resourcemanager, worker
