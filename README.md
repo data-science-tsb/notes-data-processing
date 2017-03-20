@@ -42,7 +42,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - Pig
 - Ignite
 - Storm
-- Tez
+- Tez - used by Pig and Hive, runs everything in a single Job optimized DAG, runs on YARN, probably wont use this directly
 
 ## Storage
 - HBase
