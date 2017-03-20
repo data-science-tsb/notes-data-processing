@@ -11,22 +11,42 @@
 - Input and Output
 - Bloom Filter
 
-## Fundamentals
+## File System
 - HDFS
-- MapReduce
 
-## Storage and Query
-- Hive
+## Distributed Programming
+- MapReduce
+- Spark
 - Pig
+- Ignite
+- Storm
+- Tez
+
+## Storage
 - HBase
 
-## Bulk Transferring
+## Query
+- Hive
+- MRQL
+
+## Data Ingestion
 - Sqoop
 - Flume
+- NiFi
 
 ## Serializing
 - Avro
 - Parquet
+
+## Scheduling / DataFlow
+- Spring Cloud Dataflow
+- Oozie
+- LinkedIn Azkaban
+- Falcon
+- Schedoscope
+
+## Service Programming
+- Thrift
 
 ## Messaging
 - Kafka
@@ -38,3 +58,10 @@
 ## Cluster Management
 - YARN
 - ZooKeeper
+- Curator
+- LinkedIn Norbert
+
+## Machine Learning
+- Mahout
+- SystemML
+
