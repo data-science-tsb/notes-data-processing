@@ -57,7 +57,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - NiFi
 
 ## Serializing
-- Avro
+- Avro - data serialization and exchange, schema in payload, forward-backward data compatibility
 - Parquet
 
 ## Scheduling / DataFlow
