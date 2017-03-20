@@ -13,6 +13,7 @@
 
 ## File System
 - HDFS
+- AWS S3
 
 ## Distributed Programming
 - MapReduce
