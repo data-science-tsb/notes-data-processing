@@ -5,13 +5,30 @@
 Resources: [Hadoop: The Definitive Guide - O'Reilly Media](http://shop.oreilly.com/product/0636920033448.do)
 
 ## MapReduce Design Patterns
-- Summarization
+- Numerical Summarization
+- Inverted Index Summarization
 - Filtering
-- Data Organization
-- Join
-- Metapatterns
-- Input and Output
 - Bloom Filter
+- Top N
+- Distinct
+- Structured to Hierarchical
+- Partitioning
+- Binning
+- Total Order Sorting
+- Shuffling
+- Reduce Side Join
+- Replicated Join
+- Composite Join
+- Cartesian Product
+- Job Chaining
+- Chain Folding
+- Job Merging
+- Input and Output
+- Generalizing Data
+- External Output
+- External Input
+- Partition Pruning
+
 
 Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/product/0636920025122.do)
 
