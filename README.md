@@ -17,6 +17,7 @@
 
 ## Storage and Query
 - Hive
+- Pig
 - HBase
 
 ## Bulk Transferring
@@ -33,3 +34,7 @@
 ## Indexing
 - Solr
 - Mahout
+
+## Cluster Management
+- YARN
+- ZooKeeper
