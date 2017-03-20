@@ -1,0 +1,54 @@
+---
+- name: Machine Setup (AWS)
+  hosts: localhost
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - machine_setup_aws
+
+- name: Machine Facts (AWS)
+  hosts: localhost
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - machine_facts_aws
+
+- name: Common Installation
+  hosts: namenode, resourcemanager, worker
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_common
+
+- name: NameNode Installation
+  hosts: namenode
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_namenode
+
+- name: ResourceManager Installation
+  hosts: resourcemanager
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_resourcemanager
+
+- name: Worker Installation
+  hosts: worker
+  become: False
+  vars_files:
+    - private_vars/config.yaml
+    - group_vars/config.yaml
+  roles:
+    - hadoop_worker

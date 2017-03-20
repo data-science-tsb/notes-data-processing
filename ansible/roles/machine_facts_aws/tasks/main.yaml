@@ -1,0 +1,74 @@
+#Gather the Facts for the EC2 Instances and Assign them to Hosts
+---
+  #tidy this up later: https://docs.ansible.com/ansible/ec2_remote_facts_module.html
+  - name: Discover NameNode EC2 Instances
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": namenode
+    register: namenode_machine
+
+  - name: Set NameNode Host
+    add_host:
+      groups: namenode 
+      hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
+    with_items: "{{ namenode_machine.instances }}"
+
+  - debug:
+      msg: "NameNode: {{ item }}"
+      verbosity: 1
+    with_items: 
+      - "{{ groups['namenode'] }}"
+
+  - name: Discover ResourceManager EC2 Instances
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": resourcemanager
+    register: resourcemanager_machine
+
+  - name: Set ResourceManager Host
+    add_host:
+      groups: resourcemanager 
+      hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
+    with_items: "{{ resourcemanager_machine.instances }}"
+
+  - debug:
+      msg: "ResourceManager: {{ item }}"
+      verbosity: 1
+    with_items: 
+      - "{{ groups['resourcemanager'] }}"
+
+  - name: Discover Worker EC2 Instances
+    ec2_remote_facts:
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      filters: 
+        instance-state-name: running
+        "tag:HadoopCluster": "{{ hadoop_cluster_name }}"
+        "tag:HadoopRole": worker
+    register: worker_machine
+
+  - name: Set Worker Host
+    add_host:
+      groups: worker 
+      hostname: "{{ item.public_ip_address }}"
+      dns_address: "{{ item.public_dns_name }}"
+    with_items: "{{ worker_machine.instances }}"
+
+  - debug:
+      msg: "Worker: {{ item }}"
+      verbosity: 1
+    with_items: 
+      - "{{ groups['worker'] }}"
