@@ -11,6 +11,8 @@
 - Input and Output
 - Bloom Filter
 
+Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/product/0636920025122.do)
+
 ## File System
 - HDFS
 - AWS S3
