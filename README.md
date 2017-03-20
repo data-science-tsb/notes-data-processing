@@ -2,6 +2,8 @@
 ## Setup
 - Ansible Script for EC2
 
+Resources: [Hadoop: The Definitive Guide - O'Reilly Media](http://shop.oreilly.com/product/0636920033448.do)
+
 ## MapReduce Design Patterns
 - Summarization
 - Filtering
