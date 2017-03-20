@@ -1,0 +1,51 @@
+#Create the EC2 Instances Needed for the Cluster
+---
+  #- name: AWS Security Group
+  #  local_action:
+  #    module: 
+  #    aws_access_key: "{{ aws_access_key }}"
+  #    aws_secret_key: "{{ aws_access_secret }}"
+  #    name: "Hadoop"
+  #    description: "Hadoop Cluster Security Group"
+  #    region: "{{ aws_region }}"
+  #    state: present
+  #    rules:
+  #    - proto: tcp
+  #      from_port: 80
+  #      to_port: 80
+  #      cidr_ip: 0.0.0.0/0
+  #    rules_egress:
+  #    - proto: tcp
+  #      from_port: 80
+  #      to_port: 80
+  #      cidr_ip: 0.0.0.0/0
+
+  - name: AWS EC2
+    local_action:
+      module: ec2
+      aws_access_key: "{{ aws_key_id }}"
+      aws_secret_key: "{{ aws_key_secret }}"
+      region: "{{ aws_region }}"
+      group_id: "{{ aws_security_group }}"
+      image: "{{ aws_image }}"
+      instance_type: "{{ aws_instance_type}}"
+      exact_count: "{{ item.count }}"
+      count_tag:
+        HadoopRole: "{{ item.role }}"
+        HadoopCluster: "{{ hadoop_cluster_name }}"
+        Creator: ansible
+      instance_tags: 
+        Name: "{{ item.name }}"
+        HadoopRole: "{{ item.role }}"
+        HadoopCluster: "{{ hadoop_cluster_name }}"
+        Creator: ansible
+        Environment: "{{ environment_type }}"
+      wait: True
+    with_items:
+      - { name: "{{ hadoop_cluster_name }}_NameNode", role: namenode, count: 1 }
+      - { name: "{{ hadoop_cluster_name }}_ResourceManager", role: resourcemanager, count: 1 }
+      - { name: "{{ hadoop_cluster_name }}_Worker", role: worker, count: "{{ hadoop_worker_count }}" }
+
+  - name: Pause... Wait for the Initialization to Complete Before The Machines can Be Reachable!!!
+    pause:
+      seconds: "{{ setup_delay }}"

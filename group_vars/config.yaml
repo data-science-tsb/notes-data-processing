@@ -1,0 +1,12 @@
+---
+  host_environment_file: /home/ec2-user/.bashrc
+  user: ec2-user
+  user_directory: "/home/{{ user }}"
+
+  java_install_path: /usr/lib/jvm/jre-1.8.0-openjdk
+
+  hadoop_download_src: http://mirror.rise.ph/apache/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz
+  hadoop_download_dest: "{{ user_directory }}/hadoop.tgz"
+  hadoop_download_checksum: sha512:8DE2B10FF2BCA8BC60A16504D8A3BE2843C03096BBCE7C46D283345E677C28B7B2E6123905FA243E895926A5729E0EF65517D2086C7C6D1A99D7B7F70228A3AB
+  hadoop_extract_dest: "{{ user_directory }}"
+  hadoop_install_dir: "{{ hadoop_extract_dest }}/hadoop-3.0.0-alpha2"

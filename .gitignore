@@ -1,6 +1,4 @@
-target
-.classpath
-.project
-.settings
-*.iml
-.idea
+*retry
+private_vars/config.yaml
+private_vars/aws-priv.ppk
+private_vars/aws-pub
