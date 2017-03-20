@@ -58,7 +58,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Serializing
 - Avro - data serialization and exchange, schema in payload, forward-backward data compatibility
-- Parquet
+- Parquet - columnar file format
 
 ## Scheduling / DataFlow
 - Spring Cloud Dataflow
