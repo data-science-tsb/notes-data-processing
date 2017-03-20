@@ -60,8 +60,14 @@
 - ZooKeeper
 - Curator
 - LinkedIn Norbert
+- Mesos
 
 ## Machine Learning
 - Mahout
 - SystemML
+
+## Security
+- Sentry
+- Knox Gateway
+- Ranger
 
