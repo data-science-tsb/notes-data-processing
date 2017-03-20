@@ -62,7 +62,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Scheduling / DataFlow
 - Spring Cloud Dataflow
-- Oozie
+- Oozie - job coordination, workflow, decision, error handling
 - LinkedIn Azkaban
 - Falcon
 - Schedoscope
