@@ -1,4 +1,6 @@
 # Hadoop
+All things Hadoop-related.
+
 ## Setup
 - Ansible Script for EC2
 
