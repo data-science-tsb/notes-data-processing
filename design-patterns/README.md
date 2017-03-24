@@ -25,8 +25,8 @@ hadoop fs -put /home/ec2-user/practice-hadoop-v1.3.3.jar /jars
 mvn clean package
 pscp -i C:\Users\KWL\Desktop\DriveSync\aws-priv.ppk C:\Users\KWL\Desktop\practice-hadoop\target\practice-hadoop-v1.3.3-jar-with-dependencies.jar ec2-user@54.191.254.130:/home/ec2-user
 hadoop fs -put /home/ec2-user/practice-hadoop-v1.3.3.jar /jars
-hadoop jar practice-hadoop-v1.3.3.jar com.hadooppractice.wordcount.App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output -job-conf 
-hadoop jar practice-hadoop-v1.3.3-jar-with-dependencies.jar com.hadooppractice.wordcount.App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output
+hadoop jar practice-hadoop-v1.3.3.jar App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output -job-conf 
+hadoop jar practice-hadoop-v1.3.3-jar-with-dependencies.jar App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output
 ```
 
 mapred-site.xml client

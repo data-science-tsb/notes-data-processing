@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        	<java.main.class>com.hadooppractice.wordcount.App</java.main.class>
+        	<java.main.class>com.lbibera.hadoop.designpatterns.wordcount.App</java.main.class>
         	<hadoop.version>3.0.0-alpha2</hadoop.version>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
