@@ -34,6 +34,11 @@ Resources: [Hadoop: The Definitive Guide - O'Reilly Media](http://shop.oreilly.c
 
 Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/product/0636920025122.do)
 
+## Integration
+- Spring for Hadoop
+- Spring Cloud Dataflow
+- Spring Integration
+
 ## File System
 - HDFS
 - AWS S3
