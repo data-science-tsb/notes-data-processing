@@ -102,12 +102,12 @@ http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870/
 
 - create the HDFS directories and copy some files
 ```
-./hadoop/bin/hdfs dfs -mkdir /user
-./hadoop/bin/hdfs dfs -mkdir /user/ec2-user
-./hadoop/bin/hdfs dfs -mkdir /user/dr.who
-./hadoop/bin/hdfs dfs -mkdir /user/ec2-user/input
-./hadoop/bin/hdfs dfs -rm -r hadoop/*.txt /user/ec2-user/output
-./hadoop/bin/hdfs dfs -put hadoop/*.txt /user/ec2-user/input
+hdfs dfs -mkdir /user
+hdfs dfs -mkdir /user/ec2-user
+hdfs dfs -mkdir /user/dr.who
+hdfs dfs -mkdir /user/ec2-user/input
+hdfs dfs -rm -r hadoop/*.txt /user/ec2-user/output
+hdfs dfs -put hadoop/*.txt /user/ec2-user/input
 ```
 
 - run the wordcount example

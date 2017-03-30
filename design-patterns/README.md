@@ -11,22 +11,58 @@ http://hadoop.apache.org/docs/r3.0.0-alpha2/hadoop-project-dist/hadoop-common/Fi
 http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870
 
 #create directory:
-hadoop fs -mkdir /jars
+hadoop fs -mkdir /user/lbibera/jars
 
 #upload file:
 hadoop fs -put /home/ec2-user/practice-hadoop-v1.3.3.jar /jars
 
-```
-
-
-
-## Stuck on a windows machine, deployment procedure:
-```
 mvn clean package
-pscp -i C:\Users\KWL\Desktop\DriveSync\aws-priv.ppk C:\Users\KWL\Desktop\practice-hadoop\target\practice-hadoop-v1.3.3-jar-with-dependencies.jar ec2-user@54.191.254.130:/home/ec2-user
-hadoop fs -put /home/ec2-user/practice-hadoop-v1.3.3.jar /jars
-hadoop jar practice-hadoop-v1.3.3.jar App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output -job-conf 
-hadoop jar practice-hadoop-v1.3.3-jar-with-dependencies.jar App hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/input hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000/output
+hadoop fs -put target/design-patterns-v1.3.3-jar-with-dependencies.jar /user/lbibera/jars
+
+```
+
+## Start Local Pseudo Cluster
+```ssh
+hdfs namenode -format
+start-dfs.sh
+start-yarn.sh
+```
+
+## Validate Local Cluster
+```aidl
+http://localhost:9870/dfshealth.html#tab-overview
+http://localhost:8088/cluster
+
+```
+
+## Make the HDFS Directories required to Execute MR Jobs:
+```ssh
+# user directories
+hdfs dfs -mkdir /user
+hdfs dfs -mkdir /user/dr.who
+hdfs dfs -mkdir /user/$USER
+```
+
+## Copy the Input files into HDFS
+```ssh
+hdfs dfs -mkdir input
+hdfs dfs -put $HADOOP_INSTALL/etc/hadoop/*.xml input
+```
+
+## Test Local Cluster
+```ssh
+hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha1.jar grep input output 'dfs[a-z.]+'
+```
+
+## Mac Deployment: Local Pseudo Cluster
+```ssh
+mvn clean package
+hadoop fs -put target/design-patterns-v1.3.3-jar-with-dependencies.jar application.jar
+hadoop fs -rm -r -f output
+yarn jar target/design-patterns-v1.3.3-jar-with-dependencies.jar com.lbibera.hadoop.designpatterns.MainDriver hdfs://localhost:9000/user/lbibera/input hdfs://localhost:9000/user/lbibera/output
+
+notes: 
+- on Macs, the ssh daemon is not activated by default, go to Preferences > Sharing > Enable/Check Remote Login
 ```
 
 mapred-site.xml client
