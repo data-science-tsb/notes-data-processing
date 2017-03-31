@@ -11,11 +11,11 @@ public class AverageReducer extends Reducer<Text, AverageTuple, Text, AverageTup
     @Override
     protected void reduce(Text key, Iterable<AverageTuple> values, Reducer<Text, AverageTuple, Text, AverageTuple>.Context context) throws IOException, InterruptedException {
 
-        AverageTuple computedAverage = StreamSupport.stream(values.spliterator(), false).reduce(new AverageTuple(), (a,b) -> {
-            Double temp = a.getAverageLength()*a.getCount() + b.getAverageLength()*b.getCount();
-            Long currentCount = a.getCount() + b.getCount();
-            temp = temp / currentCount;
-            return new AverageTuple(temp, currentCount);
+                AverageTuple computedAverage = StreamSupport.stream(values.spliterator(), false).reduce(new AverageTuple(), (a,b) -> {
+                    Double temp = a.getAverageLength()*a.getCount() + b.getAverageLength()*b.getCount();
+                    Long currentCount = a.getCount() + b.getCount();
+                    temp = temp / currentCount;
+                    return new AverageTuple(temp, currentCount);
         });
 
         context.write(key, computedAverage);

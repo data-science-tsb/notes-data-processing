@@ -57,7 +57,7 @@ hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.
 ```ssh
 mvn clean package
 hdfs dfs -rm -r -f output
-hadoop jar target/design-patterns-v1.3.3.jar com.lbibera.hadoop.designpatterns.MainDriver input output
+hadoop jar target/design-patterns-v1.3.3.jar com.lbibera.hadoop.designpatterns.MainDriver average input output
 
 notes: 
 - on Macs, the ssh daemon is not activated by default, go to Preferences > Sharing > Enable/Check Remote Login
