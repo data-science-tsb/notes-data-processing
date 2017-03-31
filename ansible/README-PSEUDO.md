@@ -57,10 +57,8 @@ mv hadoop-3.0.0-alpha2 hadoop
 ### Single Node:
 - test installation
 ```
-./hadoop/bin/hadoop
 mkdir input
-cp hadoop/*.txt input
-./hadoop/bin/hadoop jar hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
+hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
 cat output/*
 ```
 
@@ -70,7 +68,7 @@ cat output/*
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9000</value>
+        <value>hdfs://localhost:9000</value>
     </property>
 </configuration>
 ```
@@ -82,12 +80,20 @@ cat output/*
         <name>dfs.replication</name>
         <value>1</value>
     </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/Users/lbibera/Documents/Apps/hadoop-3.0.0-alpha2/data/datanode</value>
+    </property>
+        <property>
+        <name>dfs.namenode.data.dir</name>
+        <value>/Users/lbibera/Documents/Apps/hadoop-3.0.0-alpha2/data/namenode</value>
+    </property>
 </configuration>
 ```
 
 - format the filesystem
 ```
-./hadoop/bin/hdfs namenode -format
+hdfs namenode -format
 ```
 
 - start the NameNode, SecondaryNameNode and DataNode daemon
@@ -97,22 +103,21 @@ cat output/*
 
 - check HDFS dashboard
 ```
-http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:9870/
+http://localhost:9870/
 ```
 
 - create the HDFS directories and copy some files
 ```
 hdfs dfs -mkdir /user
-hdfs dfs -mkdir /user/ec2-user
-hdfs dfs -mkdir /user/dr.who
-hdfs dfs -mkdir /user/ec2-user/input
-hdfs dfs -rm -r hadoop/*.txt /user/ec2-user/output
-hdfs dfs -put hadoop/*.txt /user/ec2-user/input
+hdfs dfs -mkdir /user/$USER
+hdfs dfs -mkdir input
+hdfs dfs -put $HADOOP_INSTALL/etc/hadoop/*.xml input
 ```
 
 - run the wordcount example
 ```
-./hadoop/bin/hadoop jar hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
+hdfs dfs -rm -r -f output
+hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0-alpha2.jar wordcount input output
 ```
 
 - check the output
