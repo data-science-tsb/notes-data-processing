@@ -29,10 +29,9 @@ start-yarn.sh
 ```
 
 ## Validate Local Cluster
-```aidl
+```
 http://localhost:9870/dfshealth.html#tab-overview
 http://localhost:8088/cluster
-
 ```
 
 ## Make the HDFS Directories required to Execute MR Jobs:
@@ -57,9 +56,8 @@ hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.
 ## Mac Deployment: Local Pseudo Cluster
 ```ssh
 mvn clean package
-hadoop fs -put target/design-patterns-v1.3.3-jar-with-dependencies.jar application.jar
-hadoop fs -rm -r -f output
-yarn jar target/design-patterns-v1.3.3-jar-with-dependencies.jar com.lbibera.hadoop.designpatterns.MainDriver hdfs://localhost:9000/user/lbibera/input hdfs://localhost:9000/user/lbibera/output
+hdfs dfs -rm -r -f output
+hadoop jar target/design-patterns-v1.3.3.jar com.lbibera.hadoop.designpatterns.MainDriver input output
 
 notes: 
 - on Macs, the ssh daemon is not activated by default, go to Preferences > Sharing > Enable/Check Remote Login
@@ -73,10 +71,10 @@ mapred-site.xml client
     </property>
     <property>
       <name>mapred.job.tracker</name>
-      <value>resourcemanager:8021</value>
+      <value>localhost:8021</value>
  </property>
 <property>
       <name>mapreduce.jobtracker.staging.root.dir</name>
-      <value>/home/ec2-user/jobstaging</value>
+      <value>/home/$USER/jobstaging</value>
  </property>
 ```

@@ -7,13 +7,13 @@
 	<packaging>jar</packaging>
 	<version>v1.3.3</version>
 
-	<name>hadoop-practice</name>
-	<url>http://maven.apache.org</url>
+	<name>Hadoop Practice: Design Patterns</name>
+	<url>https://github.com/hack-of-all-codes/notes-hadoop</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        	<java.main.class>com.lbibera.hadoop.designpatterns.MainDriver</java.main.class>
-        	<hadoop.version>3.0.0-alpha1</hadoop.version>
+        <java.main.class>com.lbibera.hadoop.designpatterns.MainDriver</java.main.class>
+        <hadoop.version>3.0.0-alpha2</hadoop.version>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
 		<junit.jupiter.version>5.0.0-M3</junit.jupiter.version>
@@ -22,11 +22,13 @@
 	</properties>
 
 	<dependencies>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-client</artifactId>
 			<version>${hadoop.version}</version>
+            <scope>provided</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -125,6 +127,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>

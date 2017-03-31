@@ -122,7 +122,7 @@ hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.
 
 - check the output
 ```
-./hadoop/bin/hdfs dfs -get /user/ec2-user/output output
+hdfs dfs -get output output
 ```
 
 - optional: stop the NameNode, SecondaryNameNode and DataNode daemon
@@ -158,15 +158,15 @@ hadoop jar $HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.
 
 - start the YARN daemon
 ```
-hadoop/sbin/start-yarn.sh
+start-yarn.sh
 ```
 
 - check YARN dashboard
 ```
-http://ec2-54-187-57-163.us-west-2.compute.amazonaws.com:8088/
+http://localhost:8088/
 ```
 
 - optional: stop YARN
 ```
-./hadoop/sbin/stop-yarn.sh
+stop-yarn.sh
 ```
