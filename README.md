@@ -4,7 +4,10 @@ All things Hadoop-related.
 ## Setup
 - Ansible Script for EC2
 
-Resources: [Hadoop: The Definitive Guide - O'Reilly Media](http://shop.oreilly.com/product/0636920033448.do)
+Resources: 
+- [Hadoop: The Definitive Guide - O'Reilly Media](http://shop.oreilly.com/product/0636920033448.do)
+- [Udemy: The Hadoop Ecosystem Masterclass](https://www.udemy.com/learn-big-data-the-hadoop-ecosystem-masterclass/)
+- [Apache Ambari](https://cwiki.apache.org/confluence/display/AMBARI/Quick+Start+Guide)
 
 ## MapReduce Design Patterns
 - Numerical Summarization
