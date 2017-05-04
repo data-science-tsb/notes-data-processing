@@ -47,9 +47,9 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - AWS S3
 
 ## Distributed Programming
-- MapReduce - batch processing
-- Spark
-- Pig
+- MapReduce2 - batch processing
+- Spark - alternative to MR2, mainly memory-based and simpler dev API, has DAGs
+- Pig - scripting layer on top of MR2 or Tez
 - Ignite
 - Storm - realtime processing
 - Tez - used by Pig and Hive, runs everything in a single Job optimized DAG, runs on YARN, probably wont use this directly
