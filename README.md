@@ -55,14 +55,14 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - Tez - used by Pig and Hive, runs everything in a single Job optimized DAG, runs on YARN, probably wont use this directly
 
 ## Storage
-- HBase
+- HBase - OLTP storing data on HDFS
 
 ## Query
-- Hive
+- Hive - SQL facade for Hadoop
 - MRQL
 
 ## Data Ingestion
-- Sqoop
+- Sqoop - SQL+Hadoop, imports/exports RDBMS data into HDFS/Hive
 - Flume
 - NiFi
 
@@ -78,7 +78,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - Schedoscope
 
 ## Service Programming
-- Thrift
+- Thrift - small JDBC server for Hive
 
 ## Messaging
 - Kafka
