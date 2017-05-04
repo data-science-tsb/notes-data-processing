@@ -43,6 +43,10 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - Spring Cloud Dataflow
 - Spring Integration
 
+## Cluster Dashboard
+- Zeppelin
+- AMBARI
+
 ## File System
 - HDFS
 - AWS S3
