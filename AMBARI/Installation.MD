@@ -16,5 +16,10 @@ yum install -y ntp
 ```
 wget http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
 wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.0.3/hdp.repo
-mv *.repo /etc/yum.repos.d/
+sudo mv *.repo /etc/yum.repos.d/
+sudo yum repolist
+```
+1. Install Ambari Server
+```
+sudo yum install ambari-server
 ```
