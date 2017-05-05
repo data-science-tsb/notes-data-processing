@@ -28,3 +28,8 @@ sudo yum repolist
 sudo yum install ambari-server
 sudo ambari-server setup
 ```
+5. Start Ambari
+```
+sudo ambari-server start
+sudo ambari-server status
+```
