@@ -33,3 +33,8 @@ sudo ambari-server setup
 sudo ambari-server start
 sudo ambari-server status
 ```
+6. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
+```
+http://<your.ambari.server>:8080
+credentials: admin/admin
+```
