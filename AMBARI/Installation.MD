@@ -26,3 +26,7 @@ sudo yum repolist
 ```
 sudo yum install ambari-server
 ```
+5. Setup Ambari Server
+```
+sudo ambari-server setup
+```
