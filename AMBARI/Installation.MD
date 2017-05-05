@@ -23,11 +23,8 @@ wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.0.3/hdp.re
 sudo mv *.repo /etc/yum.repos.d/
 sudo yum repolist
 ```
-4. Install Ambari Server
+4. Install and Setup Ambari Server
 ```
 sudo yum install ambari-server
-```
-5. Setup Ambari Server
-```
 sudo ambari-server setup
 ```
