@@ -18,15 +18,25 @@ sudo yum install -y ntp
 ```
 3. Download Repo File for [AMBARI](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/ambari_repositories.html) and [HDP](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/hdp_26_repositories.html)
 ```
+#RHEL
 wget http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
 wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.0.3/hdp.repo
 sudo mv *.repo /etc/yum.repos.d/
 sudo yum repolist
+
+#Ubuntu
+wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
+apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+apt-get update
 ```
 4. Install and Setup Ambari Server
 ```
+#Yum
 sudo yum install ambari-server
 sudo ambari-server setup
+
+#APT
+sudo apt-get install ambari-server
 ```
 5. Start Ambari
 ```
