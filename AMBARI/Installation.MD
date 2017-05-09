@@ -43,7 +43,31 @@ sudo apt-get install ambari-server
 sudo ambari-server start
 sudo ambari-server status
 ```
-6. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
+6. Prepare an external Postgres Server
+```sql
+CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
+ALTER ROLE hive WITH LOGIN;
+
+CREATE DATABASE hive
+  WITH ENCODING='UTF8'
+       OWNER=hive
+       CONNECTION LIMIT=-1
+       TABLESPACE=pg_default;
+
+
+
+CREATE ROLE oozie PASSWORD 'bosschix123' VALID UNTIL 'infinity';
+ALTER ROLE oozie WITH LOGIN;
+
+
+CREATE DATABASE oozie
+  WITH ENCODING='UTF8'
+       OWNER=oozie
+       CONNECTION LIMIT=-1
+       TABLESPACE=pg_default;
+```
+
+7. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
 ```
 http://<your.ambari.server>:8080
 credentials: 
