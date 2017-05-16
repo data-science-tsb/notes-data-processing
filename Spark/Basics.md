@@ -4,6 +4,8 @@
 - Data Frames
 - Data Sets
 - Caching RDDs
+- Partitioning
+- External Datasets
 
 ## RDD Operations 
 - Actions
@@ -12,8 +14,6 @@
 ## Shared Variables
 - Broadcast Variables
 - Accumulators
-
-## Partitioning
 
 ## MLLib 
 
