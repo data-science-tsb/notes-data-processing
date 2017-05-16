@@ -1,16 +1,16 @@
 # Spark: Basics
 
 ## RDD
+- Data Frames
+- Data Sets
 
-## Transformations
+## RDD Operations 
+- Actions
+- Transformations
 
-## Actions
-
-## Broadcast Variables
-
-## Data Frames
-
-## Data Sets
+## Shared Variables
+- Broadcast Variables
+- Accumulators
 
 ## Partitioning
 
