@@ -62,8 +62,10 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 ## Storage
 - HBase - OLTP storing data on HDFS
 
-## Query
+## Query Engines
 - Hive - SQL facade for Hadoop
+- Drill - SQL Engine for Files, Hive, RDS, Mongo...etc
+- Phoenix - SQL engine for HBase
 - MRQL
 
 ## Data Ingestion
