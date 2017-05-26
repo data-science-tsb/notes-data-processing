@@ -1,14 +1,13 @@
 # Ambari Installation
 1. [Prepare the Environment](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/prepare_the_environment.html)
 ```
-# Setup Passwordless SSH
-
-# Enable NTP
+# Enable NTP: For Server Time Sync
+## Yum
 sudo yum install -y ntp
-
-# Ubuntu NTP
+## APT
 sudo apt install ntp
 ```
+
 2. Download Repo File for [AMBARI](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/ambari_repositories.html) and [HDP](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/hdp_26_repositories.html)
 ```
 #RHEL
