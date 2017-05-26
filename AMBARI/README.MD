@@ -25,10 +25,11 @@ apt-get update
 ```
 #Yum
 sudo yum install ambari-server
-sudo ambari-server setup
 
 #APT
 sudo apt-get install ambari-server
+
+sudo ambari-server setup
 ```
 4. Start Ambari
 ```
