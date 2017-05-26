@@ -63,7 +63,7 @@ CREATE DATABASE oozie
 5.b MySQL Alternative
 ```sql
 CREATE DATABASE hive;
-GRANT ALL PRIVILEGES on HIVE.* to 'hive'@'%' IDENTIFIED BY "bosschix123"; 
+GRANT ALL PRIVILEGES on hive.* to 'hive'@'%' IDENTIFIED BY "bosschix123"; 
 ```
 
 6. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
