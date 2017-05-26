@@ -36,7 +36,7 @@ sudo ambari-server setup
 sudo ambari-server start
 sudo ambari-server status
 ```
-5. Prepare an external Postgres Server
+5.a Prepare an external Postgres Server
 ```sql
 CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE hive WITH LOGIN;
@@ -58,6 +58,12 @@ CREATE DATABASE oozie
        OWNER=oozie
        CONNECTION LIMIT=-1
        TABLESPACE=pg_default;
+```
+
+5.b MySQL Alternative
+```sql
+CREATE DATABASE hive;
+GRANT ALL PRIVILEGES on HIVE.* to 'hive'@'*' IDENTIFIED BY "bosschix123"; 
 ```
 
 6. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
