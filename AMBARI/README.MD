@@ -38,6 +38,17 @@ sudo ambari-server status
 ```
 5.a Prepare an external Postgres Server
 ```sql
+vi /var/lib/ambari-server/resources/Ambari-DDL-Postgres-CREATE.sql
+
+CREATE ROLE ambari PASSWORD 'bosschix123' VALID UNTIL 'infinity';
+ALTER ROLE ambari WITH LOGIN;
+
+CREATE DATABASE ambari
+  WITH ENCODING='UTF8'
+       OWNER=ambari
+       CONNECTION LIMIT=-1
+       TABLESPACE=pg_default;
+
 CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE hive WITH LOGIN;
 
