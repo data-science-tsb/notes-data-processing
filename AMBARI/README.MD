@@ -1,54 +1,37 @@
 # Ambari Installation
-1. [Prepare the Environment](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/prepare_the_environment.html)
+1. Prepare the Ambari Server
 ```
-# Enable NTP: For Server Time Sync
-## Yum
-sudo yum install -y ntp
-## APT
 sudo apt install ntp
+sudo wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+sudo apt-get update
+sudo yum install ambari-server
+sudo apt-get install ambari-server
+sudo ambari-server setup
+sudo ambari-server start
 ```
 
-2. Download Repo File for [AMBARI](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/ambari_repositories.html) and [HDP](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/hdp_26_repositories.html)
+2. Prepare the Ambari Slaves
 ```
-#RHEL
-wget http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
-wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.0.3/hdp.repo
-sudo mv *.repo /etc/yum.repos.d/
-sudo yum repolist
-
-#Ubuntu
+sudo apt install ntp
+sudo apg install python-minimal
 sudo wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
 sudo apt-get update
 ```
-3. Install and Setup Ambari Server
-```
-#Yum
-sudo yum install ambari-server
 
-#APT
-sudo apt-get install ambari-server
+3. Launch the Ambari Web Client
+```
+http://ec2-xxx-xxx-xxx-xxx.us-west-2.compute.amazonaws.com:8080/#/installer/step2
+```
 
-sudo ambari-server setup
+4. Configure Services
 ```
-4. Start Ambari
+xxx
 ```
-sudo ambari-server start
-sudo ambari-server status
-```
-5.a Prepare an external Postgres Server
+
+5. Prepare an external Postgres Server
 ```sql
-vi /var/lib/ambari-server/resources/Ambari-DDL-Postgres-CREATE.sql
-
-CREATE ROLE ambari PASSWORD 'bosschix123' VALID UNTIL 'infinity';
-ALTER ROLE ambari WITH LOGIN;
-
-CREATE DATABASE ambari
-  WITH ENCODING='UTF8'
-       OWNER=ambari
-       CONNECTION LIMIT=-1
-       TABLESPACE=pg_default;
-
 CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE hive WITH LOGIN;
 
@@ -58,23 +41,14 @@ CREATE DATABASE hive
        CONNECTION LIMIT=-1
        TABLESPACE=pg_default;
 
-
-
 CREATE ROLE oozie PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE oozie WITH LOGIN;
-
 
 CREATE DATABASE oozie
   WITH ENCODING='UTF8'
        OWNER=oozie
        CONNECTION LIMIT=-1
        TABLESPACE=pg_default;
-```
-
-5.b MySQL Alternative
-```sql
-CREATE DATABASE hive;
-GRANT ALL PRIVILEGES on hive.* to 'hive'@'%' IDENTIFIED BY "bosschix123"; 
 ```
 
 6. [Log In to Apache Ambari](https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.0.3/bk_ambari-installation/content/log_in_to_apache_ambari.html)
