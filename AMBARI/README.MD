@@ -31,6 +31,10 @@ xxx
 ```
 
 5. Prepare an external Postgres Server
+```
+wget https://jdbc.postgresql.org/download/postgresql-42.1.1.jar
+sudo ambari-server setup --jdbc-db=postgres --jdbc-driver=postgresql-42.1.1.jar
+```
 ```sql
 CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE hive WITH LOGIN;
