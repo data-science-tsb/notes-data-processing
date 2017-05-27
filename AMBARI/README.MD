@@ -6,9 +6,14 @@ sudo apg install python-minimal
 sudo wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
 sudo apt-get update
+
+-- time to clone the slave image
+
 sudo apt-get install ambari-server
 sudo ambari-server setup
 sudo ambari-server start
+wget https://jdbc.postgresql.org/download/postgresql-42.1.1.jar
+sudo ambari-server setup --jdbc-db=postgres --jdbc-driver=postgresql-42.1.1.jar
 ```
 
 2. Prepare the Ambari Slaves
@@ -31,10 +36,6 @@ xxx
 ```
 
 5. Prepare an external Postgres Server
-```
-wget https://jdbc.postgresql.org/download/postgresql-42.1.1.jar
-sudo ambari-server setup --jdbc-db=postgres --jdbc-driver=postgresql-42.1.1.jar
-```
 ```sql
 CREATE ROLE hive PASSWORD 'bosschix123' VALID UNTIL 'infinity';
 ALTER ROLE hive WITH LOGIN;
