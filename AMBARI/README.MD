@@ -6,7 +6,6 @@ sudo apg install python-minimal
 sudo wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
 sudo apt-get update
-sudo yum install ambari-server
 sudo apt-get install ambari-server
 sudo ambari-server setup
 sudo ambari-server start
