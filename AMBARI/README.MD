@@ -17,9 +17,9 @@ sudo mv *.repo /etc/yum.repos.d/
 sudo yum repolist
 
 #Ubuntu
-wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
-apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
-apt-get update
+sudo wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.5.0.3/ambari.list
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+sudo apt-get update
 ```
 3. Install and Setup Ambari Server
 ```
