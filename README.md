@@ -54,11 +54,14 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 ## Distributed Programming
 - MapReduce2 - batch processing
 - Spark - alternative to MR2, mainly memory-based and simpler dev API, has DAGs
-- Spark Streaming - windowed processing, continuously runs the app,  works with microbatches
 - Pig - scripting layer on top of MR2 or Tez
 - Ignite
-- Storm - compared to spark this is a true realtime processing instead of microbatches
 - Tez - used by Pig and Hive, runs everything in a single Job optimized DAG, runs on YARN, probably wont use this directly
+
+## Data Streaming
+- Spark Streaming - windowed processing, continuously runs the app,  works with microbatches
+- Storm - compared to spark this is a true realtime processing instead of microbatches
+- Flink - clever distribution, extremely scalable/fault tolerant
 
 ## Storage
 - HBase - OLTP storing data on HDFS
