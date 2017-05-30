@@ -54,9 +54,10 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 ## Distributed Programming
 - MapReduce2 - batch processing
 - Spark - alternative to MR2, mainly memory-based and simpler dev API, has DAGs
+- Spark Streaming - windowed processing, continuously runs the app,  works with microbatches
 - Pig - scripting layer on top of MR2 or Tez
 - Ignite
-- Storm - realtime processing
+- Storm - compared to spark this is a true realtime processing instead of microbatches
 - Tez - used by Pig and Hive, runs everything in a single Job optimized DAG, runs on YARN, probably wont use this directly
 
 ## Storage
@@ -70,7 +71,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Data Ingestion
 - Sqoop - SQL+Hadoop, imports/exports RDBMS data into HDFS/Hive
-- Flume
+- Flume - data sink
 - NiFi
 
 ## Serializing
