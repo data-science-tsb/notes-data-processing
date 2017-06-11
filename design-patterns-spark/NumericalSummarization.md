@@ -24,10 +24,11 @@ val commentsMinMax = commentsXML.flatMap { str =>
     }
 }.groupBy("userId").agg(min("min").alias("min"), max("max").alias("max"), sum("count").alias("count")).cache()
 
-commentsMinMax.sort("min").show()
-commentsMinMax.sort(desc("max")).show()
-commentsMinMax.sort("count").show()
-commentsMinMax.sort(desc("count")).show()
+//commentsMinMax.sort("min").show()
+//commentsMinMax.sort(desc("max")).show()
+//commentsMinMax.sort("count").show()
+//commentsMinMax.sort(desc("count")).show()
+commentsMinMax.sort("userId").show()
 ```
 
 ## RDD
@@ -43,7 +44,7 @@ val minMaxCount = commentsXML.flatMap { str =>
             try {
                 val s = scala.xml.XML.loadString(str.trim)
                 val text = (s \ "@Text").text
-                Some(((s \ "@UserId").text, MinMaxCountTuple(text.size, text.size, 1) ))
+                Some(((s \ "@UserId").text.toLong, MinMaxCountTuple(text.size, text.size, 1) ))
             } catch {
                 case e: Exception => None
             }
@@ -55,5 +56,5 @@ val minMaxCount = commentsXML.flatMap { str =>
     }
 }.reduceByKey(_ reduce _)
 
-minMaxCount.take(10).foreach(println)
+minMaxCount.sortBy(_._1).take(20).foreach(println)
 ```
