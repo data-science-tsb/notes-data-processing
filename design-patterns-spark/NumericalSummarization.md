@@ -33,22 +33,27 @@ commentsMinMax.sort(desc("count")).show()
 ## RDD
 ```scala
 case class MinMaxCountTuple(min: Long, max: Long, count: Long) {
-    def +(other: MinMaxCountTuple): MinMaxCountTuple = MinMaxCountTuple(other.min+min, other.max+max, other.count+count)
+    def reduce(other: MinMaxCountTuple) = MinMaxCountTuple(if (other.min < min)  other.min else min, if (other.max > max) other.max else max, other.count+count)
 }
 
-val commentsXML = sc.textFile("stackoverflow/Comments.xml")
+val commentsXML = sc.textFile("stackoverflow/Comments-Small.xml")
 val minMaxCount = commentsXML.flatMap { str =>
     try {
         if (str.trim contains "row") {
-            val s = scala.xml.XML.loadString(str.trim)
-            val text = (s \ "@Text").text
-            Some(((s \ "@UserId").text, MinMaxCountTuple(text.size, text.size, 1) ))
+            try {
+                val s = scala.xml.XML.loadString(str.trim)
+                val text = (s \ "@Text").text
+                Some(((s \ "@UserId").text, MinMaxCountTuple(text.size, text.size, 1) ))
+            } catch {
+                case e: Exception => None
+            }
         } else {
             None   
         }
     } catch {
         case e: MatchError => None
     }
-}.reduceByKey(_ + _)
+}.reduceByKey(_ reduce _)
+
 minMaxCount.take(10).foreach(println)
 ```
