@@ -2,29 +2,30 @@
 
 ## Data Frame
 ```scala
-val commentsXML = spark.read.textFile("stackoverflow/Comments.xml")
+val commentsXML = spark.read.textFile("stackoverflow/Comments-Small.xml")
 
-case class MinMaxCountTuple(min: Long, max: Long, count: Long) {
-    def +(other: MinMaxCountTuple): MinMaxCountTuple = MinMaxCountTuple(other.min+min, other.max+max, other.count+count)
-}
+case class MinMaxCountTuple(userId: Long, min: Long, max: Long, count: Long)
 
 
-val comments = commentsXML.flatMap { str =>
+val commentsMinMax = commentsXML.flatMap { str =>
     try {
         if (str.trim contains "row") {
-            val s = scala.xml.XML.loadString(str.trim)
-            val text = (s \ "@Text").text
-            Some(((s \ "@UserId").text, MinMaxCountTuple(text.size, text.size, 1) ))
+            try {
+                val s = scala.xml.XML.loadString(str.trim)
+                val text = (s \ "@Text").text
+                Some(MinMaxCountTuple((s \ "@UserId").text.toLong, text.size, text.size, 1))
+            } catch {
+                case e: Exception => None   
+            }
         } else {
             None   
         }
     } catch {
         case e: MatchError => None
     }
-}
+}.groupBy("userId").agg(min("min").alias("min"), max("max").alias("max"), sum("count").alias("count"))
 
-val reducedComments = comments.groupByKey(_ + _)
-reducedComments.show()
+commentsMinMax.show()
 ```
 
 ## RDD
