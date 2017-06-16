@@ -25,7 +25,24 @@ item = sc.textFile("ml-100k/u.item")
 - Partitioning
 - External Datasets
 
-## RDD Operations 
+## RDD Operations
+```scala
+val lines = sc.textFile("ml-100k/u.data")
+val ratings = lines.map(_.split("\t")(2))
+val result = ratings.countByValue()
+
+print(result)
+```
+```python
+from pyspark import SparkConf, SparkContext
+import collections
+
+lines = sc.textFile("ml-100k/u.data")
+ratings = lines.map(lambda x: x.split()[2])
+result = ratings.countByValue()
+
+print result
+```
 - Actions
 - Transformations
 
