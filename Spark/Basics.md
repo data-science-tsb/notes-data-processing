@@ -50,7 +50,18 @@ result = ratings.countByValue()
 print result
 ```
 - Actions
-- Transformations
+- [Transformations](https://spark.apache.org/docs/latest/programming-guide.html#transformations)
+```
+map
+flatMap
+filter
+distinct
+sample
+union
+intersection
+subtract
+cartesian
+```
 
 ## Shared Variables
 - Broadcast Variables
