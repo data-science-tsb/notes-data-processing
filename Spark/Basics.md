@@ -2,19 +2,23 @@
 
 ## Spark Context
 ```scala
+//scala
 val conf = new SparkConf().setAppName(appName).setMaster(master)
 val sc = new SparkContext(conf)
 ```
 ```python
+#python
 conf = SparkConf().setAppName(appName).setMaster(master)
 sc = SparkContext(conf=conf)
 ```
 
 ## Loading File to RDD
 ```scala
+//scala
 val item = sc.textFile("ml-100k/u.item")
 ```
 ```python
+#python
 item = sc.textFile("ml-100k/u.item")
 ```
 
@@ -27,6 +31,7 @@ item = sc.textFile("ml-100k/u.item")
 
 ## RDD Operations
 ```scala
+//scala
 val lines = sc.textFile("ml-100k/u.data")
 val ratings = lines.map(_.split("\t")(2))
 val result = ratings.countByValue()
@@ -34,6 +39,7 @@ val result = ratings.countByValue()
 print(result)
 ```
 ```python
+#python
 from pyspark import SparkConf, SparkContext
 import collections
 
