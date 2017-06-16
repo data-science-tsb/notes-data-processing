@@ -49,7 +49,12 @@ result = ratings.countByValue()
 
 print result
 ```
-- Actions
+- [Actions](https://spark.apache.org/docs/latest/programming-guide.html#actions)
+```
+reduce
+collect
+count
+```
 - [Transformations](https://spark.apache.org/docs/latest/programming-guide.html#transformations)
 ```
 map
