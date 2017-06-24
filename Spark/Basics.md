@@ -70,6 +70,17 @@ cartesian
 
 ## Shared Variables
 - Broadcast Variables
+```python
+def loadMovieNames():
+    movieNames = {}
+    for line in sc.textFile("ml-100k/u.item").collect():
+        fields = line.split('|')
+        movieNames[int(fields[0])] = fields[1]
+    return movieNames
+    
+#broadcast variable
+nameDict = sc.broadcast(loadMovieNames())
+```
 - Accumulators
 
 ## MLLib 
