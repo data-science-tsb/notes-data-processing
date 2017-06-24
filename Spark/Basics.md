@@ -71,6 +71,7 @@ cartesian
 ## Shared Variables
 - Broadcast Variables
 ```python
+
 def loadMovieNames():
     movieNames = {}
     for line in sc.textFile("ml-100k/u.item").collect():
@@ -80,6 +81,9 @@ def loadMovieNames():
     
 #broadcast variable
 nameDict = sc.broadcast(loadMovieNames())
+
+#accessing broadcast variable
+sortedMoviesWithNames = sortedMovies.map(lambda countMovie : (nameDict.value[countMovie[1]], countMovie[0]))
 ```
 - Accumulators
 
