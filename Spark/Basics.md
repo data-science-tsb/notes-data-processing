@@ -101,7 +101,16 @@ nameDict = sc.broadcast(loadMovieNames())
 sortedMoviesWithNames = sortedMovies.map(lambda countMovie : (nameDict.value[countMovie[1]], countMovie[0]))
 ```
 - Accumulators
-
+```scala
+//scala
+```
+```python
+#python
+#create an accumulator
+hitCounter = sc.accumulator(0)
+#increment
+hitCounter.add(1)
+```
 ## MLLib 
 
 ## GraphX
