@@ -70,8 +70,23 @@ cartesian
 
 ## Shared Variables
 - Broadcast Variables
-```python
+```scala
+//scala
+def loadMovieNames(): Map[Int, String] = {
+    sc.textFile("ml-100k/u.item").map(line => { 
+        val fields = line.split('|')
+        (fields(0).toInt, fields(1))
+    }).collect().map(x => x._1 -> x._2).toMap
+}
 
+//broadcast variable
+val nameDict = sc.broadcast(loadMovieNames())
+
+//accessing broadcast variable
+val sortedMoviesWithNames = sortedMovies.map(countMovie => (nameDict.value(countMovie._2), countMovie._1) )
+```
+```python
+#python
 def loadMovieNames():
     movieNames = {}
     for line in sc.textFile("ml-100k/u.item").collect():
