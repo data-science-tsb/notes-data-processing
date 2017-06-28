@@ -106,7 +106,6 @@ def bfsReduce(data1, data2):
 
 #Main program here:
 iterationRdd = createStartingRdd()
-print("Processing " + str(iterationRdd.count()) + " values.")
 
 for iteration in range(0, 10):
     print("Running BFS iteration# " + str(iteration+1))
