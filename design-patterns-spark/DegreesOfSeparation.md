@@ -60,7 +60,7 @@ def bfsFlatMap(node: (Long, Hero)): List[(Long, Hero)] = {
             }
             (connection, Hero(List(), currentHero.distance+1, VISITED))
         })
-        results :+ (node._1, Hero(currentHero.connections, currentHero.distance, EXPANDED))
+        currentHero.expandedState = EXPANDED
     }
     
     results
