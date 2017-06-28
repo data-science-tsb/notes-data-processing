@@ -1,10 +1,102 @@
 # Degrees of Separation: Breadth-First Search
+
+## Scala
 ```scala
-//Scala
+// The characters we wish to find the degree of separation between:
+val startCharacterID: Long = 5306 //SpiderMan
+val targetCharacterID: Long = 14  //ADAM 3,031 (who?)
+
+val DEFAULT_DISTANCE = Int.MaxValue
+
+//scala does not have enums? well thats not appealing at all :(
+val DEFAULT = 0 //initial state
+val VISITED = 1 //visited
+val EXPANDED = 2 //expanded
+
+/**
+ * connections - Ids of the Marvel hero's cooccurences
+ * distance - current distance between this hero and the target hero, start with the max distance
+ * expandedState - (0, 1, 2)
+ */
+case class Hero(connections: List[Long], distance: Int, expandedState: Int) {
+    
+    def fold(otherHero: Hero): Hero = {
+        val newDistance = Math.min(distance, otherHero.distance)
+        val newState = Math.max(expandedState, otherHero.expandedState)
+        val newConnections = (connections ++ otherHero.connections).distinct
+        
+        Hero(newConnections, newDistance, newState)
+    }
+    
+    override def toString() = s"Distance:$distance State:$expandedState Connections:$connections"
+}
+
+// Our accumulator, used to signal when we find the target character during
+// our BFS traversal.
+val hitCounter = sc.accumulator(0)
+
+// initial state of the RDD, only the start character
+// is visited
+def convertToBFS(line: String): (Long, Hero) = {
+    val heroID::connections = line.split(" ").map(_.toLong).toList
+    
+    if (heroID == startCharacterID) {
+        return (heroID, Hero(connections, 0, VISITED))
+    }
+
+    (heroID, Hero(connections, DEFAULT_DISTANCE, DEFAULT))
+}
+
+def createStartingRdd() = sc.textFile("Marvel-Graph.txt").map(convertToBFS)
+
+def bfsFlatMap(node: (Long, Hero)): List[(Long, Hero)] = {
+    val currentHero = node._2
+    var results = List(node)
+    
+    if (currentHero.expandedState == VISITED) {
+        results = results ++ currentHero.connections.map(connection => {
+            if (connection == targetCharacterID) {
+                hitCounter += 1
+            }
+            (connection, Hero(List(), currentHero.distance+1, VISITED))
+        })
+        results :+ (node._1, Hero(currentHero.connections, currentHero.distance, EXPANDED))
+    }
+    
+    results
+}
+
+var iterationRDD = createStartingRdd()
+
+import scala.util.control.Breaks._
+
+breakable {
+for (iteration <- 0 to 5) {
+    println(s"Running BFS iteration #${iteration+1}")
+    
+    // Create new vertices as needed to darken or reduce distances in the
+    // reduce stage. If we encounter the node we're looking for as a GRAY
+    // node, increment our accumulator to signal that we're done.
+    val mapped = iterationRDD.flatMap(bfsFlatMap)
+    
+    // Note that mapped.count() action here forces the RDD to be evaluated, and
+    // that's the only reason our accumulator is actually updated.
+    println(s"Processing ${mapped.count()} values.")
+    
+    if (hitCounter.value > 0) {
+        println(s"Hit the target character! From ${hitCounter.value} different direction(s).")
+        break
+    }
+    
+    // Reducer combines data for each character ID, preserving the darkest
+    // color and shortest path.
+    iterationRDD = mapped.reduceByKey((x,y) => x fold y)
+}
+}
 ```
 
+## Python
 ```python
-#Python
 # The characters we wish to find the degree of separation between:
 startCharacterID = 5306 #SpiderMan
 targetCharacterID = 14  #ADAM 3,031 (who?)
