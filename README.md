@@ -90,6 +90,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Service Programming
 - Thrift - small JDBC server for Hive
+- Livy - REST API for managing spark jobs
 
 ## Messaging
 - Kafka
