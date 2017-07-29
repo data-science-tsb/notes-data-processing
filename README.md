@@ -115,3 +115,5 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - Knox Gateway
 - Ranger
 
+## Others
+- [Atlas](http://atlas.apache.org/) - data governance, metadata management
