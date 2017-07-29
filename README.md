@@ -101,7 +101,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Cluster Management
 - YARN
-- ZooKeeper
+- ZooKeeper - configuration management
 - Curator
 - LinkedIn Norbert
 - Mesos
