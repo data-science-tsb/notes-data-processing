@@ -97,7 +97,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## Indexing
 - Solr
-- Mahout
+- Mahout - distributed recommendation, classification, and clustering engine
 
 ## Cluster Management
 - YARN
