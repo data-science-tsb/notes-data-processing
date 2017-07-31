@@ -5,8 +5,8 @@
 ```json
 POST /batches
 {
-  "file": "hdfs://xxxx.com:/user/admin/spark-scala-poc-assembly-1.0.jar",
+  "file": "hdfs:///user/admin/spark-scala-poc-assembly-1.0.jar",
   "className": "com.kwl2.poc.sparkscala.Main",
-  "args": ["hdfs://xxxx.com:/user/admin/shakespeare.txt", "hdfs://xxxx.com:/user/livy/shakespeareWordCount"]
+  "args": ["hdfs:///user/admin/shakespeare.txt", "hdfs:///user/livy/shakespeareWordCount2"]
 }
 ```
