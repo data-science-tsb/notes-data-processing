@@ -49,6 +49,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## File System
 - HDFS
+- [HDFS NFS Gateway](https://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-hdfs/HdfsNfsGateway.html) - mount HDFS to the local file system
 - AWS S3
 
 ## Distributed Programming
