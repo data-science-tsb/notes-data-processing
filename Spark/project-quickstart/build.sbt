@@ -21,4 +21,7 @@ if (runIDE) {
   libraryDependencies ++= providedDependencies.map(_ % "provided" withSources())
 }
 
-libraryDependencies += "org.mongodb.spark" %% "mongo-spark-connector" % "2.0.0"
+libraryDependencies ++= Seq(
+  "org.mongodb.spark" %% "mongo-spark-connector" % "2.0.0",
+  "org.postgresql:postgresql:42.1.1"
+)
