@@ -1,4 +1,4 @@
-name := "project-quickstart"
+name := "project-HelloWorld"
 
 version := "1.0"
 
