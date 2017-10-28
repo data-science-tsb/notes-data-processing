@@ -1,12 +1,21 @@
-name := "project-HelloWorld"
+name := "project-quickstart"
 
 version := "1.0"
 
 scalaVersion := "2.11.4"
 
-libraryDependencies ++= {
-  val sparkVer = "2.1.0"
-  Seq(
-    "org.apache.spark" %% "spark-core" % sparkVer % "provided" withSources()
-  )
+val sparkVer = "2.1.0"
+
+lazy val providedDependencies = Seq(
+  "org.apache.spark" %% "spark-core" % sparkVer
+)
+
+//set to false if compiling for deployment
+
+val runIDE = true
+
+if (runIDE) {
+  libraryDependencies ++= providedDependencies.map(_ % "compile" withSources())
+} else {
+  libraryDependencies ++= providedDependencies.map(_ % "provided" withSources())
 }
