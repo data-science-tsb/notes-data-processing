@@ -1,25 +1,18 @@
 package com.psicoder.spark.udemy
 
-import org.apache.spark.{SparkConf, SparkContext}
+import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
 
 object WordCount {
 
   def main(args: Array[String]): Unit = {
-    val sc = createSparkContext()
+    val sc = ContextLoader.resolveSparkContext(args, "WordCount")
+    val file = sc.textFile(FileLoader.resolveFile(args, "Book.txt"))
 
-    val textFile = sc.textFile("src/main/resources/data/audioscrobbler/user_artist_data")
+    val wordCounts = file.flatMap(_.split(" ")).countByValue()
 
-    val countLines = textFile.map(_ => 1).reduce(_+_)
-
-    println("number of lines: " + countLines)
+    wordCounts.toSeq.sortBy(_._2).foreach {
+      case (word, count) => println(s"$word : $count")
+    }
   }
 
-  def createSparkContext(): SparkContext = {
-    val conf = new SparkConf()
-    conf.setMaster("local")
-    conf.setAppName("Word Count")
-    val sc = new SparkContext(conf)
-
-    return sc
-  }
 }
