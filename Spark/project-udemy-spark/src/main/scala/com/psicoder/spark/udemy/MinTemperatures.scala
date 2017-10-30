@@ -1,24 +1,32 @@
 package com.psicoder.spark.udemy
 
 import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
+import Math.min
 
 object MinTemperatures {
 
-  case class Temp(location: String, timeStamp: Long, tempType: String, temperature: Float)
+  case class Temp(stationID: String, timestamp: Long, entryType: String, temperature: Float)
 
+  /**
+    *
+    * @param args (master, appName, inputFile)
+    */
   def main(args: Array[String]): Unit = {
     val sc = ContextLoader.resolveSparkContext(args, "MinTemperatures")
     val file = sc.textFile(FileLoader.resolveFile(args, "1800.csv"))
-      .map(convertTextToTemp)
-      .filter(isTMax)
 
-    file.take(10).foreach(println)
+    val minTemps = file
+      .map(parseTemp)
+      .filter(isTMin)
+      .map(t => (t.stationID, t.temperature))
+      .reduceByKey(min)
+
+    minTemps.collect().foreach(println)
   }
 
-  def isTMax(temp: Temp): Boolean = {
-    temp.tempType == "TMAX"
-  }
-  def convertTextToTemp(text: String): Temp = {
+  def isTMin(temp: Temp): Boolean = temp.entryType == "TMIN"
+
+  def parseTemp(text: String) = {
     val fields = text.split(",")
     Temp(fields(0), fields(1).toLong, fields(2), fields(3).toFloat)
   }
