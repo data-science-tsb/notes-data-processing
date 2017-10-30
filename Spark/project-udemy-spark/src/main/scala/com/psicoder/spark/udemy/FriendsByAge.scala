@@ -21,7 +21,7 @@ object FriendsByAge {
       .reduceByKey(computeAverage)
       .mapValues(v => v._1 / v._2)
 
-    friendsByAge.collectAsMap().toSeq.sortBy(_._1).foreach(v => {
+    friendsByAge.collect().sortBy(_._1).foreach(v => {
       val age = v._1
       val averageFriends = v._2
 
