@@ -8,11 +8,13 @@ object WordCount {
     val sc = ContextLoader.resolveSparkContext(args, "WordCount")
     val file = sc.textFile(FileLoader.resolveFile(args, "Book.txt"))
 
-    val wordCounts = file.flatMap(_.split(" ")).countByValue()
+    val wordCounts = file.flatMap(normalizeWords).countByValue()
 
     wordCounts.toSeq.sortBy(_._2).foreach {
       case (word, count) => println(s"$word : $count")
     }
   }
+
+  def normalizeWords(text: String) = """\W""".r.split(text.toLowerCase)
 
 }
