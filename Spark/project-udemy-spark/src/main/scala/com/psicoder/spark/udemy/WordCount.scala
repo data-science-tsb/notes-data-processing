@@ -16,7 +16,7 @@ object WordCount {
       .reduceByKey(addExact)
 
     val wordCountsSorted = wordCounts
-      .map { case(k, v) => (v, k) }
+      .map(_.swap)
       .sortByKey()
 
     wordCountsSorted
