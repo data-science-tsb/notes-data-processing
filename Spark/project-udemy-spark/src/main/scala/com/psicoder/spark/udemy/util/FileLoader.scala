@@ -6,7 +6,9 @@ object FileLoader {
     if (args.isDefinedAt(2)) {
       args(2)
     } else {
-      s"src/main/resources/data/$dataLocation"
+      dataFile(dataLocation)
     }
   }
+
+  def dataFile(fileName: String): String = s"src/main/resources/data/$fileName"
 }
