@@ -1,5 +1,5 @@
-# Hadoop
-All things Hadoop-related.
+# Data Processing
+All things involving Data Processing; such as Hadoop, Spark, and Pentaho.
 
 ## Setup
 - Ansible Script for EC2
