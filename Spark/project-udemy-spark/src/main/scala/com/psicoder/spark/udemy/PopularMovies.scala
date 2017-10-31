@@ -10,30 +10,26 @@ object PopularMovies {
     val sc = ContextLoader.resolveSparkContext(args, "PopularMovies")
     val file = sc.textFile(FileLoader.resolveFile(args, "ml-100k/u.data"))
 
-    //val nameMap = loadMovieNames()
-    //val nameMap = sc.broadcast(loadMovieNames())
+    val nameMap = sc.broadcast(loadMovieNames())
 
     val moviePopularity = file
       .map(parse)
       .reduceByKey(_+_)
       .map(_.swap)
       .sortByKey()
+      .mapValues(nameMap.value.get(_).get)
 
     moviePopularity
       .collect()
-      .foreach { case(popularity, movieId) => println(s"$movieId : $popularity") }
+      .foreach { case(popularity, movieName) => println(s"$movieName : $popularity") }
   }
 
   def loadMovieNames(): Map[Int, String] = {
-    Source.fromFile(FileLoader.dataFile("ml-100k/u.item"), "UTF-8")
+    Source.fromFile(FileLoader.dataFile("ml-100k/u.item"), "ISO-8859-1")
       .getLines()
-      .flatMap { line =>
-        try {
-          val fields = line.split("|")
-          Some(fields(0).toInt -> fields(1))
-        } catch {
-          case _: Throwable => None
-        }
+      .map { line =>
+        val fields = line.split("\\|")
+        fields(0).toInt -> fields(1)
       }
       .toMap
   }
