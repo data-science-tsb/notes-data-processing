@@ -25,9 +25,7 @@ object FriendsByAge {
       .foreach { case(age, averageFriends) => println(s"The average friends of age $age is $averageFriends") }
   }
 
-  def friendCountSummation(a:(Int, Int), b:(Int, Int)): (Int, Int) = {
-    (a._1 + b._1, a._2 + b._2)
-  }
+  def friendCountSummation(a:(Int, Int), b:(Int, Int)): (Int, Int) = (a._1 + b._1, a._2 + b._2)
 
   def parse(line: String): (Int, Int) = {
     val fields = line.split(",")
