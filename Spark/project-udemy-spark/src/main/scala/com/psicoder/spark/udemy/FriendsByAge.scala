@@ -1,6 +1,6 @@
 package com.psicoder.spark.udemy
 
-import org.apache.spark.{SparkConf, SparkContext}
+import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
 
 /**
   * calculate the average number of friends for age
@@ -10,44 +10,31 @@ import org.apache.spark.{SparkConf, SparkContext}
 object FriendsByAge {
 
   def main(args: Array[String]): Unit = {
+    val sc = ContextLoader.resolveSparkContext(args, "FriendsByAge")
+    val file = sc.textFile(FileLoader.resolveFile(args, "fakefriends.csv"))
 
-    val sc = createSparkContext()
+    val friendsByAge = file
+      .map(parse)
+      .mapValues((_, 1))
+      .reduceByKey(friendCountSummation)
+      .mapValues { case(sumFriends, sumPopulation) => sumFriends / sumPopulation }
 
-    val friendsFile = "src/main/resources/data/fakefriends.csv"
-
-    val friendsByAge = sc.textFile(friendsFile)
-      .map(parseLine)
-      .mapValues(x => (x, 1))
-      .reduceByKey(computeAverage)
-      .mapValues(v => v._1 / v._2)
-
-    friendsByAge.collect().sortBy(_._1).foreach(v => {
-      val age = v._1
-      val averageFriends = v._2
-
-      println(s"The average friends of age $age is $averageFriends")
-    })
+    friendsByAge
+      .collect()
+      .sortBy(_._1)
+      .foreach { case(age, averageFriends) => println(s"The average friends of age $age is $averageFriends") }
   }
 
-  def computeAverage(a:(Int, Int), b:(Int, Int)): (Int, Int) = {
+  def friendCountSummation(a:(Int, Int), b:(Int, Int)): (Int, Int) = {
     (a._1 + b._1, a._2 + b._2)
   }
 
-  def parseLine(line: String): (Int, Int) = {
+  def parse(line: String): (Int, Int) = {
     val fields = line.split(",")
 
     val age = fields(2).toInt
     val numFriends = fields(3).toInt
 
     (age, numFriends)
-  }
-
-  def createSparkContext(): SparkContext = {
-    val conf = new SparkConf()
-    conf.setMaster("local")
-    conf.setAppName("Friends By Age")
-    val sc = new SparkContext(conf)
-
-    return sc
   }
 }

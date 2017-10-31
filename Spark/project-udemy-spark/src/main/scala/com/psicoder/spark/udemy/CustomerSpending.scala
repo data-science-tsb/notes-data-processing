@@ -15,12 +15,12 @@ object CustomerSpending {
         (customerOrder.customerId, customerOrder.amount)
       }
       .reduceByKey(_+_)
-      .map { case(k, v) => (v, k) }
+      .map(_.swap)
       .sortByKey()
 
     orderSummary
       .collect()
-      .foreach { case(k, v) => println(s"$v : $k")}
+      .foreach { case(amount, customerId) => println(s"$customerId : $amount")}
   }
 
   def parse(text: String): CustomerOrder = {

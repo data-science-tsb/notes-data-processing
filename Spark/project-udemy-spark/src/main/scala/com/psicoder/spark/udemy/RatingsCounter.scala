@@ -1,6 +1,6 @@
 package com.psicoder.spark.udemy
 
-import org.apache.spark.{SparkConf, SparkContext}
+import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
 
 /**
   * section 2: lecture 9
@@ -9,24 +9,17 @@ import org.apache.spark.{SparkConf, SparkContext}
 object RatingsCounter {
 
   def main(args: Array[String]): Unit = {
-    val sc = createSparkContext()
+    val sc = ContextLoader.resolveSparkContext(args, "RatingsCounter")
+    val file = sc.textFile(FileLoader.resolveFile(args, "ml-100k/u.data"))
 
-    val mappedRatings = sc.textFile("src/main/resources/data/ml-100k/u.data")
-
-    val result = mappedRatings
+    val result = file
       .map(_.split("")(2))
       .countByValue()
 
-    result.toSeq.sortBy(_._1).foreach(println)
-  }
-
-  def createSparkContext(): SparkContext = {
-    val conf = new SparkConf()
-    conf.setMaster("local")
-    conf.setAppName("Ratings Counter")
-    val sc = new SparkContext(conf)
-
-    return sc
+    result
+      .toSeq
+      .sortBy(_._1)
+      .foreach(println)
   }
 
 }

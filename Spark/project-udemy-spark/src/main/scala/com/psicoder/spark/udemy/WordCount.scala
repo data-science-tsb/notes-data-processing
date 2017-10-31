@@ -1,8 +1,8 @@
 package com.psicoder.spark.udemy
 
-import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
+import java.lang.Math.addExact
 
-import Math.addExact
+import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
 
 object WordCount {
 
