@@ -38,6 +38,10 @@ Resources:
 
 Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/product/0636920025122.do)
 
+## ETL Tools
+- [Pentaho Data Integration](/PentahoDataIntegration)
+- Google Cloud Dataflow
+
 ## Integration
 - Spring for Hadoop
 - Spring Cloud Dataflow
@@ -88,7 +92,6 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - LinkedIn Azkaban
 - Falcon
 - Schedoscope
-- Pentaho
 
 ## Service Programming
 - Thrift - small JDBC server for Hive
