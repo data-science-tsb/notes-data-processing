@@ -88,6 +88,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 - LinkedIn Azkaban
 - Falcon
 - Schedoscope
+- Pentaho
 
 ## Service Programming
 - Thrift - small JDBC server for Hive
