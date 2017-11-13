@@ -40,7 +40,7 @@ Resources: [MapReduce Design Patterns - O'Reilly Media](http://shop.oreilly.com/
 
 ## ETL Tools
 - [Pentaho Data Integration](/PentahoDataIntegration)
-- Google Cloud Dataflow
+- [Google Cloud Dataflow](/GoogleCloudDataflow)
 
 ## Integration
 - Spring for Hadoop
