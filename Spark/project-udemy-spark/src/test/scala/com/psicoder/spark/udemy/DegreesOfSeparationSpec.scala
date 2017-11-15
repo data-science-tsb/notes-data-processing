@@ -31,4 +31,20 @@ class DegreesOfSeparationSpec extends UnitSpec {
 
     assert(reducedNode.distance == 1)
   }
+
+  "Reduce" should "combine the connections distinctly" in {
+    val nodeA = HeroNode(Array(1, 2, 3, 4, 5), 1, VisitStatus.Visiting)
+    val nodeB = HeroNode(Array(3, 4, 5, 6, 7, 8), 2, VisitStatus.Visiting)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    val connections = reducedNode.connections
+
+    assert(connections.length == 8)
+
+    assert(connections(0) == 1)
+    assert(connections(4) == 5)
+    assert(connections(5) == 6)
+    assert(connections(7) == 8)
+  }
 }
