@@ -13,3 +13,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
   "org.apache.spark" %% "spark-hive" % sparkVersion
 )
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
