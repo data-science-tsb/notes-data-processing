@@ -16,7 +16,7 @@ object DegreesOfSeparation {
     val NotVisited, Visiting, Visited = Value
   }
 
-  case class HeroNode(heroId: Int, connections: Array[Int], distance: Int, visitStatus: VisitStatus.Value)
+  case class HeroNode(connections: Array[Int], distance: Int, visitStatus: VisitStatus.Value)
 
   def main(args: Array[String]): Unit = {
     val sc = ContextLoader.resolveSparkContext(args, "PopularSuperhero")
@@ -33,7 +33,7 @@ object DegreesOfSeparation {
       iterationRDD.count()
 
       if (!hitCounter.isZero) {
-        //TODO: break off this loop
+        println("Im supposed to stop now... :(" + iteration)
       }
 
       iterationRDD = mapped.reduceByKey(reduce)
@@ -50,17 +50,40 @@ object DegreesOfSeparation {
       if (heroId == startHeroId) (VisitStatus.Visiting, 0)
       else (VisitStatus.NotVisited, MAX_DISTANCE)
 
-    (heroId, HeroNode(heroId, fields.drop(1).map(_.toInt), distance, visitStatus))
+    (heroId, HeroNode(fields.drop(1).map(_.toInt), distance, visitStatus))
   }
 
+  /**
+    *
+    * @param currentNode
+    * @param hitCounter
+    * @return
+    */
   def expandNode(currentNode: (Int, HeroNode), hitCounter: LongAccumulator): Seq[(Int, HeroNode)] = {
-    //TODO: implement
-    Array(currentNode)
+
+    val (heroId, hero) = currentNode
+    var expandedResults = Array((heroId, HeroNode(hero.connections, hero.distance, VisitStatus.Visited)))
+
+    if (hero.visitStatus == VisitStatus.Visiting) {
+      expandedResults ++= hero.connections.map(id => {
+        if (targetHeroId == id) hitCounter add 1
+        (id, HeroNode(Array(), hero.distance + 1, VisitStatus.Visiting))
+      })
+    }
+
+    expandedResults
   }
 
   def reduce(a: HeroNode, b: HeroNode): HeroNode = {
-    //TODO: implement
-    HeroNode(1,Array(1,2,3),MAX_DISTANCE,VisitStatus.Visited)
+    val newVisitStatus = (a.visitStatus, b.visitStatus) match {
+      case (VisitStatus.Visited, _) | (_, VisitStatus.Visited)    => VisitStatus.Visited
+      case (VisitStatus.Visiting, _) | (_, VisitStatus.Visiting)  => VisitStatus.Visiting
+      case _                                                      => VisitStatus.NotVisited
+    }
+
+    val newDistance = if (a.distance > b.distance) a.distance else b.distance
+
+    HeroNode(a.connections union b.connections distinct, newDistance, newVisitStatus)
   }
 
 }
