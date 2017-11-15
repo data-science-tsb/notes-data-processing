@@ -81,7 +81,7 @@ object DegreesOfSeparation {
       case _                                                      => VisitStatus.NotVisited
     }
 
-    val newDistance = if (a.distance > b.distance) a.distance else b.distance
+    val newDistance = if (a.distance < b.distance) a.distance else b.distance
 
     HeroNode(a.connections union b.connections distinct, newDistance, newVisitStatus)
   }

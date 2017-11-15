@@ -22,4 +22,13 @@ class DegreesOfSeparationSpec extends UnitSpec {
 
     assert(reducedNode.visitStatus == VisitStatus.Visiting)
   }
+
+  "Reduce" should "pick the shorter distance" in {
+    val nodeA = HeroNode(Array(), 1, VisitStatus.Visiting)
+    val nodeB = HeroNode(Array(), 2, VisitStatus.Visiting)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.distance == 1)
+  }
 }
