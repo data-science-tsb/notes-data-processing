@@ -3,6 +3,7 @@ package com.psicoder.spark.udemy
 import java.lang.Math.addExact
 
 import com.psicoder.spark.udemy.util.{ContextLoader, FileLoader}
+import org.apache.spark.rdd.RDD
 
 object WordCount {
 
@@ -10,10 +11,7 @@ object WordCount {
     val sc = ContextLoader.resolveSparkContext(args, "WordCount")
     val file = sc.textFile(FileLoader.resolveFile(args, "Book.txt"))
 
-    val wordCounts = file
-      .flatMap(normalizeWords)
-      .map((_, 1))
-      .reduceByKey(addExact)
+    val wordCounts = count(file)
 
     val wordCountsSorted = wordCounts
       .map(_.swap)
@@ -22,6 +20,13 @@ object WordCount {
     wordCountsSorted
       .collect()
       .foreach { case (count, word) => println(s"$word : $count") }
+  }
+
+  def count(lines: RDD[String]): RDD[(String, Int)] = {
+    lines
+      .flatMap(normalizeWords)
+      .map((_, 1))
+      .reduceByKey(addExact)
   }
 
   def normalizeWords(text: String) = """\W""".r.split(text.toLowerCase)
