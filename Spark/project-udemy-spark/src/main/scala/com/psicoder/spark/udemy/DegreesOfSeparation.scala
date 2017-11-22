@@ -26,19 +26,27 @@ object DegreesOfSeparation {
 
     val hitCounter = sc.longAccumulator("hitCounter")
 
+    var (found, distance, hits) = (false, MAX_DISTANCE, 0L)
     var iterationRDD = graphFile.map(parse(_, startHeroId, MAX_DISTANCE))
     for (iteration <- 0 to 10) {
-      val mapped = iterationRDD.flatMap(expandNode(_, hitCounter, targetHeroId))
+      if (!found) {
+        val mapped = iterationRDD.flatMap(expandNode(_, hitCounter, targetHeroId))
 
-      //cheat code to force flatMap evaluation
-      iterationRDD.count()
+        //cheat code to force flatMap evaluation
+        iterationRDD.count()
 
-      val isHit = !hitCounter.isZero
-      //TODO: break loop
-      println(s"running iteration $iteration: $isHit")
+        val isHit = !hitCounter.isZero
+        if (isHit) {
+          found = true
+          distance = iteration
+          hits = hitCounter.count
+        }
 
-      iterationRDD = mapped.reduceByKey(reduce)
+        iterationRDD = mapped.reduceByKey(reduce)
+      }
     }
+
+    println(s"Found: $found at distance = $distance, hits = $hits")
   }
 
   def parse(line: String, startHeroId: Int, maxDistance: Int): (Int, HeroNode) = {
