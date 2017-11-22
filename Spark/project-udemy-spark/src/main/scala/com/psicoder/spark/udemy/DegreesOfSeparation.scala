@@ -8,47 +8,47 @@ import org.apache.spark.util.LongAccumulator
   */
 object DegreesOfSeparation {
 
-  val MAX_DISTANCE = 9999
-  val startHeroId = 5306 //SpiderMan
-  val targetHeroId = 14 //Adam
-
   object VisitStatus extends Enumeration {
     val NotVisited, Visiting, Visited = Value
   }
 
-  case class HeroNode(connections: Array[Int], distance: Int, visitStatus: VisitStatus.Value)
+  case class HeroNode(connections: Array[Int], distance: Int, visitStatus: VisitStatus.Value) {
+    override def toString() = s"HeroNode(Array(${connections.mkString(",")}), $distance, VisitStatus.$visitStatus)"
+  }
 
   def main(args: Array[String]): Unit = {
+    val MAX_DISTANCE = 9999
+    val startHeroId = 5306 //SpiderMan
+    val targetHeroId = 14 //Adam
+
     val sc = ContextLoader.resolveSparkContext(args, "PopularSuperhero")
     val graphFile = sc.textFile(FileLoader.resolveFile(args, "Marvel-Graph.txt"))
 
     val hitCounter = sc.longAccumulator("hitCounter")
 
-    var iterationRDD = graphFile.map(parse)
+    var iterationRDD = graphFile.map(parse(_, startHeroId, MAX_DISTANCE))
     for (iteration <- 0 to 10) {
-
-      val mapped = iterationRDD.flatMap(expandNode(_, hitCounter))
+      val mapped = iterationRDD.flatMap(expandNode(_, hitCounter, targetHeroId))
 
       //cheat code to force flatMap evaluation
       iterationRDD.count()
 
-      if (!hitCounter.isZero) {
-        println("Im supposed to stop now... :(" + iteration)
-      }
+      val isHit = !hitCounter.isZero
+      //TODO: break loop
+      println(s"running iteration $iteration: $isHit")
 
       iterationRDD = mapped.reduceByKey(reduce)
-
     }
   }
 
-  def parse(line: String): (Int, HeroNode) = {
+  def parse(line: String, startHeroId: Int, maxDistance: Int): (Int, HeroNode) = {
     val fields = line.split(" ")
 
     val heroId = fields(0).toInt
 
     val (visitStatus, distance) =
       if (heroId == startHeroId) (VisitStatus.Visiting, 0)
-      else (VisitStatus.NotVisited, MAX_DISTANCE)
+      else (VisitStatus.NotVisited, maxDistance)
 
     (heroId, HeroNode(fields.drop(1).map(_.toInt), distance, visitStatus))
   }
@@ -59,15 +59,17 @@ object DegreesOfSeparation {
     * @param hitCounter
     * @return
     */
-  def expandNode(currentNode: (Int, HeroNode), hitCounter: LongAccumulator): Seq[(Int, HeroNode)] = {
+  def expandNode(currentNode: (Int, HeroNode), hitCounter: LongAccumulator, targetHeroId: Int): Seq[(Int, HeroNode)] = {
 
     val (heroId, hero) = currentNode
-    var expandedResults = Array((heroId, HeroNode(hero.connections, hero.distance, VisitStatus.Visited)))
+    var expandedResults = Array(currentNode)
 
     if (hero.visitStatus == VisitStatus.Visiting) {
+      expandedResults(0) = (heroId, HeroNode(hero.connections, hero.distance, VisitStatus.Visited))
+
       expandedResults ++= hero.connections.map(id => {
         if (targetHeroId == id) hitCounter add 1
-        (id, HeroNode(Array(), hero.distance + 1, VisitStatus.Visiting))
+        (id, HeroNode(Array(heroId), hero.distance + 1, VisitStatus.Visiting))
       })
     }
 
