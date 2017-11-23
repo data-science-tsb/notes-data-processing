@@ -28,12 +28,12 @@ object DegreesOfSeparation {
 
     var (found, distance, hits) = (false, MAX_DISTANCE, 0L)
     var iterationRDD = graphFile.map(parse(_, startHeroId, MAX_DISTANCE))
-    for (iteration <- 0 to 10) {
+    for (iteration <- 1 to 10) {
       if (!found) {
         val mapped = iterationRDD.flatMap(expandNode(_, hitCounter, targetHeroId))
 
         //cheat code to force flatMap evaluation
-        iterationRDD.count()
+        println(s"Iteration #$iteration: Processing ${mapped.count()} values.")
 
         val isHit = !hitCounter.isZero
         if (isHit) {
@@ -77,7 +77,7 @@ object DegreesOfSeparation {
 
       expandedResults ++= hero.connections.map(id => {
         if (targetHeroId == id) hitCounter add 1
-        (id, HeroNode(Array(heroId), hero.distance + 1, VisitStatus.Visiting))
+        (id, HeroNode(Array(), hero.distance + 1, VisitStatus.Visiting))
       })
     }
 
