@@ -7,7 +7,7 @@ import com.psicoder.spark.udemy.test.UnitSpec
 
 class DegreesOfSeparationSpec extends UnitSpec {
 
-  "DegreesOfSeparation.reduce(heroNodeA, heroNodeB)" should "choose the Visited Status when one of the parameter is visited" in {
+  "DegreesOfSeparation.reduce(heroNodeA, heroNodeB)" should "choose Visited over NotVisited" in {
     val nodeA = HeroNode(Array(), 0, VisitStatus.Visited)
     val nodeB = HeroNode(Array(), 0, VisitStatus.NotVisited)
 
@@ -16,13 +16,82 @@ class DegreesOfSeparationSpec extends UnitSpec {
     assert(reducedNode.visitStatus === VisitStatus.Visited)
   }
 
-  it should "choose the Visiting Status when one of the parameter is visiting" in {
+  it should "choose Visited over NotVisited (Swapped Parameters)" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.NotVisited)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visited)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visited)
+  }
+
+  it should "choose Visited over Visiting" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.Visited)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visiting)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visited)
+  }
+
+  it should "choose Visited over Visiting (Swapped Parameters)" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.Visiting)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visited)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visited)
+  }
+
+  it should "choose Visiting over NotVisited" in {
     val nodeA = HeroNode(Array(), 0, VisitStatus.Visiting)
     val nodeB = HeroNode(Array(), 0, VisitStatus.NotVisited)
 
     val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
 
     assert(reducedNode.visitStatus === VisitStatus.Visiting)
+  }
+
+  it should "choose Visiting over NotVisited (Swapped Parameters)" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.NotVisited)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visiting)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visiting)
+  }
+
+  it should "choose preserve Visiting" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.Visiting)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visiting)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visiting)
+  }
+
+  it should "choose preserve Visited" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.Visited)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.Visited)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.Visited)
+  }
+
+  it should "choose preserve NotVisited" in {
+    val nodeA = HeroNode(Array(), 0, VisitStatus.NotVisited)
+    val nodeB = HeroNode(Array(), 0, VisitStatus.NotVisited)
+
+    val reducedNode = DegreesOfSeparation.reduce(nodeA, nodeB)
+
+    assert(reducedNode.visitStatus === VisitStatus.NotVisited)
+  }
+
+  it should "differentiate the status" in {
+    assert(VisitStatus.Visited !== VisitStatus.Visiting)
+    assert(VisitStatus.Visiting !== VisitStatus.NotVisited)
+    assert(VisitStatus.NotVisited !== VisitStatus.Visited)
   }
 
   it should "pick the shorter distance" in {
