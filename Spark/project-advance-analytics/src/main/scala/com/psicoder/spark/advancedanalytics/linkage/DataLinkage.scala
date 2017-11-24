@@ -10,7 +10,10 @@ object DataLinkage {
       .option("header", "true")
       .csv(FileLoader.resolveFile(args, "donation/block_*.csv"))
 
-    blocks.show()
+    println(" Schema:")
+    blocks.printSchema()
+
+    blocks.select("is_match").show()
     println(s"Size: ${blocks.count}")
   }
 }
