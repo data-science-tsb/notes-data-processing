@@ -28,7 +28,8 @@ object DegreesOfSeparation {
 
     var (found, distance, hits) = (false, MAX_DISTANCE, 0L)
     var iterationRDD = graphFile.map(parse(_, startHeroId, MAX_DISTANCE))
-    for (iteration <- 1 to 10) {
+
+    for (iteration <- 1 to 10) { //TODO: do a proper "functional" iteration
       if (!found) {
         val mapped = iterationRDD.flatMap(expandNode(_, hitCounter, targetHeroId))
 
@@ -67,6 +68,7 @@ object DegreesOfSeparation {
     * @param hitCounter
     * @return
     */
+  //TODO: the hitAccumulator is an impurity to this function
   def expandNode(currentNode: (Int, HeroNode), hitCounter: LongAccumulator, targetHeroId: Int): Seq[(Int, HeroNode)] = {
 
     val (heroId, hero) = currentNode
