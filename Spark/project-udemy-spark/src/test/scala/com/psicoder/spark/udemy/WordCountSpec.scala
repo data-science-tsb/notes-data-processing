@@ -30,4 +30,5 @@ class WordCountSpec extends UnitSpec with BeforeAndAfter {
 
     wordCounts should equal(Array(("humans", 1), ("test", 2)))
   }
+
 }

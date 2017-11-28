@@ -27,6 +27,7 @@ object WordCount {
       .flatMap(normalizeWords)
       .map((_, 1))
       .reduceByKey(addExact)
+      .sortByKey()
   }
 
   def normalizeWords(text: String) = """\W""".r.split(text.toLowerCase)
