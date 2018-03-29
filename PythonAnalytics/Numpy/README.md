@@ -22,11 +22,17 @@ arr = np.linspace(0,10,100) #100 evenly-spaced points from 0 to 10
 
 ### Generating Matrices
 ```python
-arr2d = np.zeros((2,10))
+arr_2d = np.zeros((2,10))
 # array([
 #         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
 #         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
 #     ])
 
-arr2d = np.linspace(40,99,100).reshape(10,10) #10x10 array
+arr_2d = np.linspace(40,99,100).reshape(10,10) #10x10 array
+
+arr_eye = np.eye(3)
+# identity matrix
+# array([[1., 0., 0.],
+#        [0., 1., 0.],
+#        [0., 0., 1.]])
 ```
