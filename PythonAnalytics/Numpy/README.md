@@ -21,6 +21,7 @@ arr = np.linspace(0,10,100) #100 evenly-spaced points from 0 to 10
 
 # randomly-generated vector
 arr = np.random.rand(5) #5 elements (0 to 1)
+arr = np.random.randn(5) #5 elements around 0, -1 to 1 normally distributed
 ```
 
 ### Generating Matrices
@@ -41,4 +42,5 @@ arr_eye = np.eye(3)
 
 # randomly-generated matrices
 arr_5x5 = np.random.rand(5,5)
+arr_5x5 = np.random.randn(5,5) #Gaussian distribution
 ```
