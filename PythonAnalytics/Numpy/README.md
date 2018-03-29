@@ -17,4 +17,5 @@ arr = np.arange(0,10) #0,1 ... 9
 arr = np.arange(0,10,0.5) #0,0.5 ... 9.6
 arr = np.zeros(10) #ten zeroes
 arr = np.ones(10) #ten ones
+arr = np.linspace(0,10,100) #100 points from 0 to 10
 ```
