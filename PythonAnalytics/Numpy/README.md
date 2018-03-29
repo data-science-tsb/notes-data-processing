@@ -13,5 +13,6 @@ arr = np.array(my_list)
 
 ## Generating Array
 ```python
-arr = np.arange(0,10)
+arr = np.arange(0,10) #0,1 ... 9
+arr = np.arange(0,10,0.5) #0,0.5 ... 9.6
 ```
