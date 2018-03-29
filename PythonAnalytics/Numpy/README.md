@@ -19,3 +19,13 @@ arr = np.zeros(10) #ten zeroes
 arr = np.ones(10) #ten ones
 arr = np.linspace(0,10,100) #100 evenly-spaced points from 0 to 10
 ```
+
+# Generating Matrices
+```python
+arr2d = np.zeros((2,10))
+# array([
+#         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+#         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
+#     ])
+
+```
