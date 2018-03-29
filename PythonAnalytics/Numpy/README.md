@@ -18,6 +18,9 @@ arr = np.arange(0,10,0.5) #0,0.5 ... 9.6
 arr = np.zeros(10) #ten zeroes
 arr = np.ones(10) #ten ones
 arr = np.linspace(0,10,100) #100 evenly-spaced points from 0 to 10
+
+# randomly-generated vector
+arr = np.random.rand(5) #5 elements (0 to 1)
 ```
 
 ### Generating Matrices
@@ -35,4 +38,7 @@ arr_eye = np.eye(3)
 # array([[1., 0., 0.],
 #        [0., 1., 0.],
 #        [0., 0., 1.]])
+
+# randomly-generated matrices
+arr_5x5 = np.random.rand(5,5)
 ```
