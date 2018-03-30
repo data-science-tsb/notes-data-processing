@@ -82,3 +82,23 @@ reset_df.set_index('sumXY') #sets the index to the selected column
 |2	|C	|-2.018168	|0.740122	|0.528813	|-0.589001	|1.268936|
 |3	|D	|0.188695	|-0.758872	|-0.933237	|0.955057	|-1.692109|
 |4	|E	|0.190794	|1.978757	|2.605967	|0.683509	|4.584725|
+
+# Multi-Index
+```python
+outside = ['G1','G1','G1','G2','G2','G2']
+inside = [1,2,3,1,2,3]
+hier_index = list(zip(outside,inside))
+hier_index = pd.MultiIndex.from_tuples(hier_index)
+df = pd.DataFrame(np.random.randn(6,2),index=hier_index,columns=['A','B'])
+```
+|     | | A |	B |
+|-----|-|---|---|
+|G1   |1|0.188695	  |-0.758872  |
+|     |2|-0.933237	|0.955057   |
+|     |3|0.190794	  |1.978757   |
+|G2   |1|2.605967	  |0.683509   |
+|     |2|0.302665	  |1.693723   |
+|     |3|-1.706086	|-1.159119  |
+```python
+df.loc['G2'].loc[2]['B'] #selecting from a multi-level index
+```
