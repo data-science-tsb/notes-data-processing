@@ -64,4 +64,6 @@ df.loc[['A','B'], ['X', 'Y']]
 ### Conditional Selection
 ```python
 df[df['W'] > 0] #rows where W is positive
+
+df[(df['W'] > 0) & (df['Y'] > 1)] #rows where W is positive and Y is greater than 1
 ```
