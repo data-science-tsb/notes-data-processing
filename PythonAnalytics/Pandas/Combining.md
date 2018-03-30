@@ -36,4 +36,5 @@ pd.merge(left, right, on=['key1', 'key2'])
 ### Join: Merge on Index
 ```python
 left.join(right)
+left.join(right, how='outer')
 ```
