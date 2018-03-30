@@ -44,3 +44,13 @@ arr_eye = np.eye(3)
 arr_5x5 = np.random.rand(5,5)
 arr_5x5 = np.random.randn(5,5) #Gaussian distribution
 ```
+
+## Operations
+Operations are broadcasted to each element
+```py
+# [1,23]
+
+arr * arr #[1,4,9]
+arr + arr #[2,4,6]
+np.sqrt(arr) #[1.        , 1.41421356, 1.73205081]
+```
