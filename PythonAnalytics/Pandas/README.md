@@ -36,5 +36,7 @@ df = pd.DataFrame(randn(5,4), ['A', 'B', 'C', 'D', 'E'], ['W', 'X', 'Y', 'Z'])
 ### Operations
 ```python
 df['sumXY'] = df['X'] + df['Y'] #creates a new column
-df = df.drop('sumXY',axis=1) #removes the column
+
+df = df.drop('sumXY',axis=1) #removes the column (this does not mutate the original object)
+df.drop('sumXY',axis=1,inplace=True) #inplace = mutate the original object
 ```
