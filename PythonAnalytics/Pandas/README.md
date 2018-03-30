@@ -42,3 +42,13 @@ df.drop('sumXY',axis=1,inplace=True) #inplace = mutate the original object
 
 df.drop('E') #remove a row
 ```
+
+### Selecting Subsets
+```python
+df.loc['A':'B']
+df.iloc[0:2]
+```
+|	W	|X	|Y	|Z |
+|---|---|---|--|
+|A	|2.706850	|0.628133	|0.907969	|0.503826|
+|B	|0.651118	|-0.319318	|-0.848077	|0.605965|
