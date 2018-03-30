@@ -60,3 +60,8 @@ df.loc[['A','B'], ['X', 'Y']]
 |---|-|
 |A	|0.628133	|0.907969|
 |B	|-0.319318	|-0.848077|
+
+### Conditional Selection
+```
+df[df['W'] > 0] #rows where W is positive
+```
