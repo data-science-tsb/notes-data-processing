@@ -45,7 +45,7 @@ arr_5x5 = np.random.rand(5,5)
 arr_5x5 = np.random.randn(5,5) #Gaussian distribution
 ```
 
-## Operations
+### Operations
 Operations are broadcasted to each element
 ```py
 # [1,2,3]
