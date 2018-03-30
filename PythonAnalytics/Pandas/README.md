@@ -83,13 +83,14 @@ reset_df.set_index('sumXY') #sets the index to the selected column
 |3	|D	|0.188695	|-0.758872	|-0.933237	|0.955057	|-1.692109|
 |4	|E	|0.190794	|1.978757	|2.605967	|0.683509	|4.584725|
 
-# Multi-Index
+### Multi-Index
 ```python
 outside = ['G1','G1','G1','G2','G2','G2']
 inside = [1,2,3,1,2,3]
 hier_index = list(zip(outside,inside))
 hier_index = pd.MultiIndex.from_tuples(hier_index)
 df = pd.DataFrame(np.random.randn(6,2),index=hier_index,columns=['A','B'])
+df.index.names = ['Group','Num'] #name the indexes
 ```
 |     | | A |	B |
 |-----|-|---|---|
@@ -102,3 +103,13 @@ df = pd.DataFrame(np.random.randn(6,2),index=hier_index,columns=['A','B'])
 ```python
 df.loc['G2'].loc[2]['B'] #selecting from a multi-level index
 ```
+
+```python
+#selecting a cross-section
+df.xs(1,level='Num')
+```
+| | A |	B |
+|-|---|---|
+|Group|		
+|G1	|-0.116773	|1.901755|
+|G2	|-1.136645	|0.000366|
