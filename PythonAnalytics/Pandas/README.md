@@ -65,5 +65,6 @@ df.loc[['A','B'], ['X', 'Y']]
 ```python
 df[df['W'] > 0] #rows where W is positive
 
+# replace 'and' and 'or' with & and | respectively
 df[(df['W'] > 0) & (df['Y'] > 1)] #rows where W is positive and Y is greater than 1
 ```
