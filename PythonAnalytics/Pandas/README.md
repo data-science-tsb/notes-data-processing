@@ -32,3 +32,9 @@ df = pd.DataFrame(randn(5,4), ['A', 'B', 'C', 'D', 'E'], ['W', 'X', 'Y', 'Z'])
 |C	|-2.018168	|0.740122	  |0.528813   |-0.589001|
 |D	|0.188695	  |-0.758872  |-0.933237  |0.955057 |
 |E	|0.190794   |1.978757	  |2.605967	  |0.683509 |
+
+### Operations
+```python
+df['sumXY'] = df['X'] + df['Y'] #creates a new column
+df = df.drop('sumXY',axis=1) #removes the column
+```
