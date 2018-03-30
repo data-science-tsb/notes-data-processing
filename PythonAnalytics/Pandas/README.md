@@ -39,4 +39,6 @@ df['sumXY'] = df['X'] + df['Y'] #creates a new column
 
 df = df.drop('sumXY',axis=1) #removes the column (this does not mutate the original object)
 df.drop('sumXY',axis=1,inplace=True) #inplace = mutate the original object
+
+df.drop('E') #remove a row
 ```
