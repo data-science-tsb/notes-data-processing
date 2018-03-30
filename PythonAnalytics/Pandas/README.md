@@ -117,3 +117,4 @@ df.xs(1,level='Num')
 ### Other Topics
 - [Working with Missing Data: Drop or Fill](MissingData.md)
 - [Aggregating DataFrames: GroupBy](GroupBy.md)
+- [Combining DataFrames: Concatenate, Merge, and Join](Combining.md)
