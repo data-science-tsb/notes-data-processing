@@ -69,9 +69,10 @@ df[df['W'] > 0] #rows where W is positive
 df[(df['W'] > 0) & (df['Y'] > 1)] #rows where W is positive and Y is greater than 1
 ```
 
-### Reset Index
+### Change Index
 ```python
-reset_df = df.reset_index()
+reset_df = df.reset_index() #sets the index to integer row numbers
+reset_df.set_index('sumXY') #sets the index to the selected column
 ```
 
 |index	|W	|X	|Y	|Z	|sumXY|
