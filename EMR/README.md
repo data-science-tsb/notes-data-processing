@@ -2,6 +2,7 @@
 
 ## Executing a Spark Step
 ```
+//TODO: fix the problem with multiple jars
 aws emr create-cluster \
 --name "Add Spark Step Cluster" \
 --release-label emr-5.30.0 \
