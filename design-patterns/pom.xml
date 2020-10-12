@@ -15,7 +15,7 @@
         <java.main.class>com.lbibera.hadoop.designpatterns.MainDriver</java.main.class>
         <hadoop.version>3.0.0-alpha2</hadoop.version>
 		<java.version>1.8</java.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<junit.jupiter.version>5.0.0-M3</junit.jupiter.version>
 		<junit.vintage.version>${junit.version}.0-M3</junit.vintage.version>
 		<junit.platform.version>1.0.0-M3</junit.platform.version>
